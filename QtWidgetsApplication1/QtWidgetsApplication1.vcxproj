@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="32Tsest|Win32">
+      <Configuration>32Tsest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="32Tsest|x64">
+      <Configuration>32Tsest</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A9C72610-6D80-43A0-8553-450A755532B7}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='32Tsest|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='32Tsest|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>5.9.1_msvc2015_64</QtInstall>
+    <QtModules>core;xml;opengl;network;gui;uitools;widgets;positioning;serialport;webchannel;websockets;sensors;winextras;openglextensions;webengine;webenginewidgets;charts</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>5.9.1_msvc2015_64</QtInstall>
+    <QtModules>core;xml;opengl;network;gui;uitools;widgets;positioning;serialport;webchannel;websockets;sensors;winextras;openglextensions;webengine;webenginewidgets;charts</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Qt\Qt5.9.1\5.9.1\msvc2015_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dialog_initsetting.cpp" />
+    <ClCompile Include="pathGeneration.cpp" />
+    <ClCompile Include="Read_txt.cpp" />
+    <ClCompile Include="serialPort.cpp" />
+    <ClCompile Include="shiZhu429.cpp" />
+    <ClCompile Include="taskManagement.cpp" />
+    <QtRcc Include="QtWidgetsApplication1.qrc" />
+    <QtUic Include="Dialog_initsetting.ui">
+      <SubType>Designer</SubType>
+    </QtUic>
+    <QtUic Include="QtWidgetsApplication1.ui" />
+    <QtMoc Include="QtWidgetsApplication1.h" />
+    <ClCompile Include="Control\CLchazhi.cpp" />
+    <ClCompile Include="Control\CloseLoopModel.cpp" />
+    <ClCompile Include="Control\CtlSystem.cpp" />
+    <ClCompile Include="Control\DIController.cpp" />
+    <ClCompile Include="Control\FlightSimulation.cpp" />
+    <ClCompile Include="Control\GeneralDefinitions.cpp" />
+    <ClCompile Include="Control\Ginv_f.cpp" />
+    <ClCompile Include="Control\Ginv_s.cpp" />
+    <ClCompile Include="Control\Ginv_vs.cpp" />
+    <ClCompile Include="global.cpp" />
+    <ClCompile Include="QtWidgetsApplication1.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cav_l0.h" />
+    <ClInclude Include="cav_l1.h" />
+    <ClInclude Include="Control\CLchazhi.h" />
+    <ClInclude Include="Control\CloseLoopModel.h" />
+    <ClInclude Include="Control\CtlSystem.h" />
+    <ClInclude Include="Control\CtlSystemHeader.h" />
+    <ClInclude Include="Control\DIController.h" />
+    <ClInclude Include="Control\FlightSimulation.h" />
+    <ClInclude Include="Control\GeneralDefinitions.h" />
+    <ClInclude Include="Control\Ginv_f.h" />
+    <ClInclude Include="Control\Ginv_s.h" />
+    <ClInclude Include="Control\Ginv_vs.h" />
+    <ClInclude Include="shiZhu429.h" />
+    <ClInclude Include="ZHHK429_dll.h" />
+    <QtMoc Include="dialog_initsetting.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="pathGeneration.h" />
+    <ClInclude Include="Read_txt.h" />
+    <QtMoc Include="serialPort.h" />
+    <ClInclude Include="UIBridgeHeader.h" />
+    <QtMoc Include="taskManagement.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Control\StaticParamsFile\al.txt" />
+    <Text Include="Control\StaticParamsFile\C_D_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_lbeta_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ldeltaa_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ldeltac_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ldeltar_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_lp_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_lr_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_L_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_mdeltac_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_mo_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_mq_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_nbeta_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ndeltaa_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ndeltar_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_np_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_nr_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ybeta_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ydeltaa_al.txt" />
+    <Text Include="Control\StaticParamsFile\C_ydeltar_al.txt" />
+    <Text Include="Control\StaticParamsFile\delta_c0.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="A429_API_DLL.dll" />
+    <None Include="DDSLib\Dlls\SysWOW64\vcruntime140d.dll" />
+    <None Include="PCI_A429.dll" />
+    <None Include="ZHHK429.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="A429_API_DLL.lib" />
+    <Library Include="PCI_A429.lib" />
+    <Library Include="ZHHK429.lib" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

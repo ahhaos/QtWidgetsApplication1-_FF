@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="Control">
+      <UniqueIdentifier>{3962cf1f-0991-4fb7-ba20-55d85d62da13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control\StaticParamsFile">
+      <UniqueIdentifier>{2bfa7973-2a64-437c-bf00-56815dd6e41c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="QtWidgetsApplication1.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="QtWidgetsApplication1.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="QtWidgetsApplication1.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="QtWidgetsApplication1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\CLchazhi.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\CloseLoopModel.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\CtlSystem.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DIController.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\FlightSimulation.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\GeneralDefinitions.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\Ginv_f.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\Ginv_s.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\Ginv_vs.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="taskManagement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Read_txt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dialog_initsetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pathGeneration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serialPort.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shiZhu429.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\CLchazhi.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\CloseLoopModel.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\CtlSystem.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\CtlSystemHeader.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DIController.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\FlightSimulation.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\GeneralDefinitions.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\Ginv_f.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\Ginv_s.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\Ginv_vs.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBridgeHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Read_txt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pathGeneration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZHHK429_dll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cav_l0.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cav_l1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shiZhu429.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Control\StaticParamsFile\al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_D_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_L_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_lbeta_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ldeltaa_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ldeltac_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ldeltar_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_lp_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_lr_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_mdeltac_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_mo_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_mq_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_nbeta_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ndeltaa_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ndeltar_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_np_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_nr_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ybeta_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ydeltaa_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\C_ydeltar_al.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+    <Text Include="Control\StaticParamsFile\delta_c0.txt">
+      <Filter>Control\StaticParamsFile</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="taskManagement.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="dialog_initsetting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="serialPort.h">
+      <Filter>Source Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DDSLib\Dlls\SysWOW64\vcruntime140d.dll" />
+    <None Include="ZHHK429.dll" />
+    <None Include="A429_API_DLL.dll" />
+    <None Include="PCI_A429.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ZHHK429.lib" />
+    <Library Include="A429_API_DLL.lib" />
+    <Library Include="PCI_A429.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Dialog_initsetting.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+</Project>

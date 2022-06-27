@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/QtWidgetsApplication1"/>
+    <qresource prefix="/startflush">
+        <file>picture/NUAA.jpg</file>
+    </qresource>
+</RCC>

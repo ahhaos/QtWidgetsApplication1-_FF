@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtWidgetsApplication1Class</class>
+ <widget class="QMainWindow" name="QtWidgetsApplication1Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1164</width>
+    <height>840</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>QtWidgetsApplication1</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>30</y>
+      <width>411</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_Line_Z"/>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>640</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>开始/暂停</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>310</y>
+      <width>411</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_Line_XY"/>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>231</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_SimulationTime">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>仿真时间(秒):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLCDNumber" name="lcdNumber_SimulationTime">
+       <property name="smallDecimalPoint">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QComboBox" name="comboBox_ModeSelect">
+    <property name="geometry">
+     <rect>
+      <x>208</x>
+      <y>649</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>6</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>保持当前速度航向高度(默认)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>下滑模式</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>目标点制导</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>手动模式</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>航路点模式_net</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>航路点模式2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>着舰仿真模式</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>118</x>
+      <y>639</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>模式选择:</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_ModeDisplay">
+    <property name="geometry">
+     <rect>
+      <x>198</x>
+      <y>689</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>680</y>
+      <width>478</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_VKH_V">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>速度V</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_VKH_V">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>300.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_VKH_K">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>航向K(ENU)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_VKH_K">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>-181.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>181.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_VKH_H">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>高度H</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_VKH_H">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>100000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>30</y>
+      <width>411</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_Line_theta"/>
+   </widget>
+   <widget class="QToolBox" name="toolBox_tool">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>20</y>
+      <width>131</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>131</width>
+       <height>203</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>工具栏/仿真曲线选择</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="page_angle">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>131</width>
+       <height>203</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>角度</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>101</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="checkBox_selcetTheta">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Theta</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="checkBox_Psi">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Psi</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="checkBox_selcetBeta">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Beta</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="checkBox_selcetPhi">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Phi</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="checkBox_selcetAlpha">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Alpha</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_speed">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>131</width>
+       <height>203</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>速度</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>3</y>
+        <width>69</width>
+        <height>73</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="checkBox_Vx">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Vx</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="checkBox_Vy">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Vy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="checkBox_Vz">
+         <property name="maximumSize">
+          <size>
+           <width>67</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Vz</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>310</y>
+      <width>411</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_Line_V"/>
+   </widget>
+   <widget class="QListView" name="listView_targets">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>340</y>
+      <width>141</width>
+      <height>261</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>40</y>
+      <width>89</width>
+      <height>47</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_10">
+     <item>
+      <widget class="QCheckBox" name="checkBox_true_H">
+       <property name="text">
+        <string>实际高度</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_expect_H">
+       <property name="text">
+        <string>理想高度</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>310</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>航路点序列:</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>600</y>
+      <width>281</width>
+      <height>76</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_xiaHua_2">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>下滑角度</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_xiaHua_V">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <double>300.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_xiaHua_H">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <double>30000000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_xiaHua_3">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>目标下滑高度</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_xiaHua_angle">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="minimum">
+        <double>-3.500000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>3.500000000000000</double>
+       </property>
+       <property name="value">
+        <double>-3.500000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_xiaHua">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>速度</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>730</y>
+      <width>511</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_13">
+     <item row="0" column="3">
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_XYZV_Y">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Y</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_XYZV_Y">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>-100000.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100000.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="5">
+      <layout class="QGridLayout" name="gridLayout_11">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_XYZV_V">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>速度V</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_XYZV_V">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>300.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="4">
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_XYZV_Z">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Z</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_XYZV_Z">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>-100000.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="6">
+      <layout class="QGridLayout" name="gridLayout_12">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_XYZV_Error">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>误差等级</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_XYZV_Error">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>300.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.500000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="2">
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_XYZV_X">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>X</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_XYZV_X">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>-100000.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100000.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_target">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>目标</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_isSerialPortSend">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>600</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>是否使用串口发送数据</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>610</y>
+      <width>365</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_zhuoJian_XV">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>X(东向)速度</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_zhuoJianXV">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>90.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_zhuoJian_YV_Limit">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Y向最大速度</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_zhuoJianYV_Limit">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>90.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="label_zhuoJian_ZV_Limit">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Z向(下滑)最大速度(m/s)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_Command_zhuoJianZV_Limit">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>90.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_note">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>660</y>
+      <width>371</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;仿真过程中，如需要减小X向速度，请缓慢减速，并观察XY曲线中蓝线和绿色端点位置，如果位置相差过大则可能出现程序崩溃。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;仿真开始后请尽量不要修改此些设置。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>20</y>
+      <width>180</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_LBH_H">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>高程:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLCDNumber" name="lcdNumber_LBH_H">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="smallDecimalPoint">
+        <bool>true</bool>
+       </property>
+       <property name="digitCount">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_LBH_L">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>经度:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLCDNumber" name="lcdNumber_LBH_L">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="smallDecimalPoint">
+        <bool>true</bool>
+       </property>
+       <property name="digitCount">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_LBH_B">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>纬度:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLCDNumber" name="lcdNumber_LBH_B">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="smallDecimalPoint">
+        <bool>true</bool>
+       </property>
+       <property name="digitCount">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>textBrowser_note</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>horizontalLayoutWidget_2</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>comboBox_ModeSelect</zorder>
+   <zorder>label</zorder>
+   <zorder>textBrowser_ModeDisplay</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>horizontalLayoutWidget_3</zorder>
+   <zorder>toolBox_tool</zorder>
+   <zorder>horizontalLayoutWidget_4</zorder>
+   <zorder>listView_targets</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>label_2</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>checkBox_isSerialPortSend</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget_3</zorder>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1164</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuZHHK429">
+    <property name="title">
+     <string>ZHHK</string>
+    </property>
+    <addaction name="ZHHK429Init_action"/>
+   </widget>
+   <addaction name="menuZHHK429"/>
+  </widget>
+  <action name="action_initSetting">
+   <property name="text">
+    <string>初始设置</string>
+   </property>
+  </action>
+  <action name="action_test">
+   <property name="text">
+    <string>预留</string>
+   </property>
+  </action>
+  <action name="action_initsetting">
+   <property name="text">
+    <string>初始化设置</string>
+   </property>
+  </action>
+  <action name="ZHHK429Init_action">
+   <property name="text">
+    <string>初始化</string>
+   </property>
+   <property name="toolTip">
+    <string>ZHHK429Init_action</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="QtWidgetsApplication1.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>Start_Suspend_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>702</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>84</x>
+     <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_ModeSelect</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>ModelChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>428</x>
+     <y>704</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_VKH_V</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_VKH_V_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>578</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>685</x>
+     <y>545</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_VKH_K</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_VKH_K_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>794</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>757</x>
+     <y>540</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_VKH_H</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_VKH_H_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>955</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>851</x>
+     <y>546</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_XYZV_X</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_XYZV_X_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>645</x>
+     <y>813</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>712</x>
+     <y>642</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_XYZV_Y</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_XYZV_Y_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>735</x>
+     <y>813</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>593</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_XYZV_Z</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_XYZV_Z_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>825</x>
+     <y>813</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>969</x>
+     <y>628</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_XYZV_V</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_XYZV_V_ValueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>906</x>
+     <y>813</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1064</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_true_H</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_checkBox_true_H_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_expect_H</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_checkBox_expect_H_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>menuBar</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_trigered_QAction(QAction*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>11</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>84</x>
+     <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_xiaHua_V</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>doubleSpinBox_Command_xiaHua_V(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>566</x>
+     <y>709</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>839</x>
+     <y>723</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_xiaHua_angle</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>doubleSpinBox_Command_xiaHua_angle(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>657</x>
+     <y>709</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>716</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_xiaHua_H</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>doubleSpinBox_Command_xiaHua_H(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>759</x>
+     <y>709</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1015</x>
+     <y>728</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_isSerialPortSend</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_isSerialPortSend_StateChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>639</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>252</x>
+     <y>618</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_zhuoJianXV</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_zhuoJianXV_valueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1077</x>
+     <y>793</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>840</x>
+     <y>700</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_zhuoJianYV_Limit</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_zhuoJianYV_Limit_valueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1168</x>
+     <y>794</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>671</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_Command_zhuoJianZV_Limit</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_doubleSpinBox_Command_zhuoJianZV_Limit_valueChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1275</x>
+     <y>793</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1269</x>
+     <y>823</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Vx</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_checkBox_Vx_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>754</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_selcetAlpha</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_selectAlpha_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1289</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1110</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Psi</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_selectPsi_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1289</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1102</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Vy</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_checkBox_Vy_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1017</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Vz</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_checkBox_Vz_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1040</x>
+     <y>233</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_selcetBeta</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_selectBeta_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1289</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1110</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_selcetTheta</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_selectTheta_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1289</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1110</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_selcetPhi</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_selectPhi_stateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1289</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1110</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>On_doubleSpinBox_Command_dH_ValueChanged(double)</slot>
+  <slot>On_trigered_QAction(QAction*)</slot>
+  <slot>doubleSpinBox_Command_xiaHua_V(double)</slot>
+  <slot>doubleSpinBox_Command_xiaHua_angle(double)</slot>
+  <slot>doubleSpinBox_Command_xiaHua_H(double)</slot>
+  <slot>On_checkBox_isSerialPortSend_StateChange(int)</slot>
+  <slot>On_doubleSpinBox_Command_zhuoJianXV_valueChanged(double)</slot>
+  <slot>On_doubleSpinBox_Command_zhuoJianYV_Limit_valueChanged(double)</slot>
+  <slot>On_doubleSpinBox_Command_zhuoJianZV_Limit_valueChanged(double)</slot>
+ </slots>
+</ui>
