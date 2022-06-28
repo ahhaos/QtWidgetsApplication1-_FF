@@ -48,7 +48,8 @@ int CFlightSimulation::Update()
 		m_Vx = m_dV * cos(m_dGama) * cos(m_dChi);
 		m_dV = sqrt(m_Vx*m_Vx);
 	}*/
-	if (m_dZ >= 0.1)
+	//if (m_dZ >= 0.1)			//解决飞机的东北天坐标系不能为负的情况
+	if (true)
 	{
 		SFlightStatus fs_d;
 		att m_att;

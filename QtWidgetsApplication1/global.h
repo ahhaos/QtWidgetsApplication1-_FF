@@ -67,6 +67,9 @@ extern double data_origin_Z;
 extern double data_origin_L0;
 extern double data_origin_B0;
 extern double data_origin_H0;
+
+// 东北天坐标系原点在经纬高坐标系中的位置，及参考点
+extern double lla_ref[];
 //飞机的当前经纬高
 extern double L;
 extern double B;//纬度
@@ -210,18 +213,16 @@ extern double Cnp1 , Cnp0;
 extern double Cnr1 , Cnr0 ;
 
 
-extern int netSendTime;
+
 
 //extern QYTopicSender* pstSender
 
 extern double VXdd, VYdd, VZdd;//地心地固系的速度
 
-extern int netID;
-extern char netTopic[];
 
 
-extern double target_1[] ;
-extern double target_2[] ;
+
+
 
 
 extern std::vector<std::vector<double>> targetNode_L_B_H;
@@ -257,3 +258,15 @@ extern double zhuoJianXV;
 extern std::string udpSendTargetIP;
 extern int udpSendTargetPort;
 
+// 航路点追踪模式或者偏差着舰模式的航路点追踪速度
+extern double follow_V;
+
+// 存储着舰刨面信息
+extern std::vector<std::vector<double>> landingPlaningInfo;
+
+
+// 理想着舰点的BLH
+extern double shipPointBLH[];
+
+// 着舰引导模式
+extern int zhuoJianMode;

@@ -79,9 +79,6 @@
     <ClCompile Include="taskManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Read_txt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dialog_initsetting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,6 +89,12 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="shiZhu429.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wgs_conversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PID.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,9 +135,6 @@
     <ClInclude Include="UIBridgeHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Read_txt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pathGeneration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -148,6 +148,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shiZhu429.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wgs_conversions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

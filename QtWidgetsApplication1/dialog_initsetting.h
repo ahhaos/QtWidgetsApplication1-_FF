@@ -5,7 +5,7 @@
 #include <QDialog>
 #include "ui_dialog_initsetting.h"
 #include <QSettings>
-#include "Read_txt.h"
+//#include "Read_txt.h"
 //namespace Ui {
 //	class Dialog_initsetting;
 //}

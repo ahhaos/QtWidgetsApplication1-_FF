@@ -1085,8 +1085,8 @@ int CDIController::Follow(double x, double y, double z, double m_ship_dH, double
 		m_pfst.m_Vy = dBuffer[3];
 		m_pfst.m_Vz = dBuffer[4];
 
-		dBuffer[0] = sqrt(dBuffer[5] * dBuffer[5] + dBuffer[6] * dBuffer[6] + dBuffer[7] * dBuffer[7]);		//合速度
-
+		//dBuffer[0] = sqrt(dBuffer[5] * dBuffer[5] + dBuffer[6] * dBuffer[6] + dBuffer[7] * dBuffer[7]);		//合速度
+		dBuffer[0] = follow_V;
 																											//三轴线加速度生成语句
 																											//dBuffer[5] = (m_pfst.m_Vx - m_lpfst.m_Vx) / m_dT;			//x轴线加速度
 																											//dBuffer[6] = (m_pfst.m_Vy - m_lpfst.m_Vy) / m_dT;			//y轴线加速度

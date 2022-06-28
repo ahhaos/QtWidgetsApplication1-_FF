@@ -123,10 +123,11 @@
   <ItemGroup>
     <ClCompile Include="dialog_initsetting.cpp" />
     <ClCompile Include="pathGeneration.cpp" />
-    <ClCompile Include="Read_txt.cpp" />
+    <ClCompile Include="PID.cpp" />
     <ClCompile Include="serialPort.cpp" />
     <ClCompile Include="shiZhu429.cpp" />
     <ClCompile Include="taskManagement.cpp" />
+    <ClCompile Include="wgs_conversions.cpp" />
     <QtRcc Include="QtWidgetsApplication1.qrc" />
     <QtUic Include="Dialog_initsetting.ui">
       <SubType>Designer</SubType>
@@ -159,12 +160,13 @@
     <ClInclude Include="Control\Ginv_f.h" />
     <ClInclude Include="Control\Ginv_s.h" />
     <ClInclude Include="Control\Ginv_vs.h" />
+    <ClInclude Include="PID.h" />
     <ClInclude Include="shiZhu429.h" />
+    <ClInclude Include="wgs_conversions.h" />
     <ClInclude Include="ZHHK429_dll.h" />
     <QtMoc Include="dialog_initsetting.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="pathGeneration.h" />
-    <ClInclude Include="Read_txt.h" />
     <QtMoc Include="serialPort.h" />
     <ClInclude Include="UIBridgeHeader.h" />
     <QtMoc Include="taskManagement.h" />

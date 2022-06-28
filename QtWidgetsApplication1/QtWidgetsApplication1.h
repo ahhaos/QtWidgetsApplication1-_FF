@@ -18,7 +18,7 @@
 #include "serialPort.h"
 #include <QObject>
 #include <QUdpSocket>
-
+#include "wgs_conversions.h"
 #include "ZHHK429_dll.h"
 
 #pragma comment(lib,"ZHHK429.lib")
@@ -57,6 +57,8 @@ public:
 	QLineSeries* lineSeries_Z_true;
 	QLineSeries* lineSeries_Z_expect;
 	QChartView* chartView_Z;
+	QLineSeries* lineSeries_landingPlaning;
+
 
 	QChart* mChart_XY;
 	QLineSeries* lineSeries_XY_true;
@@ -84,7 +86,7 @@ public:
 
 
 	serialport* port;
-
+	WgsConversions* wgs_enuConversion_APP;
 
 
 
@@ -189,6 +191,8 @@ public slots:
 	void On_doubleSpinBox_Command_zhuoJianZV_Limit_valueChanged(double arg);
 
 	void On_doubleSpinBox_Command_zhuoJianXV_valueChanged(double arg);
+
+	void drawLandingPlaning();
 
 signals:
 	void test();

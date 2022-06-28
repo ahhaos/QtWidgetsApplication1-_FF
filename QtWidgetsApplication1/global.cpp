@@ -115,11 +115,15 @@ double data_expect_shipspeed = 11.111;
 //飞机起始坐标
 double data_origin_X = 0;
 double data_origin_Y = 0;
-double data_origin_Z = 2800;
+double data_origin_Z = 400;
 //飞机起始经纬高
 double data_origin_L0 = 119.55;
 double data_origin_B0 = 40;
-double data_origin_H0 = 2800;
+double data_origin_H0 = 400;
+
+// 东北天坐标系原点在经纬高坐标系中的位置，及参考点
+double lla_ref[3] = { data_origin_B0 ,data_origin_L0 ,0 };
+
 
 //飞机的当前经纬高
 double L= data_origin_L0;
@@ -129,7 +133,7 @@ double H= data_origin_H0;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //飞机起始速度
-double data_origin_V = 50;			
+double data_origin_V = 66;			
 
 //飞机起始姿态角
 double data_origin_Alpha = 0.1483;
@@ -183,15 +187,12 @@ double Cnp1 = -0.08, Cnp0 = 0.07;
 double Cnr1 = -0.13, Cnr0 = -0.43;
 
 
-int netSendTime = 100;  ///网络通信发送时钟定时器，默认100ms
+
 
 
 double VXdd, VYdd, VZdd;//地心地固系的速度
 
 
-
-double target_1[3] = { 119.55 ,0,2800 };
-double target_2[3] = { 119.56 ,0,2800 };
 
 
 std::vector<std::vector<double>> targetNode_L_B_H;
@@ -223,7 +224,7 @@ double arriveDistanceFlag = 1;
 //BOOL g_isRun = FALSE;
 
 // 纵向和侧向矫正速度
-double VY_MAXLimt = 3;
+double VY_MAXLimt = 1000;
 double VZ_MAXLimt = 10;
 
 // 偏差着舰UDP接收端口
@@ -237,4 +238,18 @@ double zhuoJianXV = 55;
 std::string udpSendTargetIP = "127.0.0.1";
 int udpSendTargetPort = 4001;
 
+// 航路点追踪模式或者偏差着舰模式的航路点追踪速度
+double follow_V = 66.6;
 
+// 存储着舰刨面信息
+std::vector<std::vector<double>> landingPlaningInfo;
+
+// 理想着舰点的BLH
+double shipPointBLH[3] = { 40.0, 119.7, 0 };
+
+// 着舰引导模式
+int zhuoJianMode = 0;		// 0 航路点模式，无偏差导引
+							// 1 光电
+							// 2 雷达
+							// 3 卫星
+							// 4 雷达光电融合

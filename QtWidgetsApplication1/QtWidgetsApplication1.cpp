@@ -64,6 +64,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	udpSendTimer = new QTimer();
 	connect(udpSendTimer, SIGNAL(timeout()), this, SLOT(udpSendDAta()));
 
+	connect(taskManager, SIGNAL(drawLandingPlaning()), this, SLOT(drawLandingPlaning()));
 
 	////////////////Z的实际与期望曲线绘图
 	lineSeries_Z_true = new QLineSeries();  //创建折线系列
@@ -75,11 +76,18 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 
 	mChart_Z->addSeries(lineSeries_Z_true);          //向图表中添加系列
 	mChart_Z->addSeries(lineSeries_Z_expect);          //向图表中添加系列
+
+	// 刨面折线
+	lineSeries_landingPlaning = new QLineSeries;
+	lineSeries_landingPlaning->setName("着舰刨面");
+	mChart_Z->addSeries(lineSeries_landingPlaning);
+	//lineSeries_landingPlaning->setPen(QPen(QBrush(Qt::red), 2, Qt::DotLine));
+
 	mChart_Z->createDefaultAxes();            //创建默认的坐标，必须在addSeries之后调用
 	mChart_Z->axisX()->setMin(0);
 	mChart_Z->axisY()->setMax(300);
-	mChart_Z->axisX()->setTitleText("起点距离");
-	mChart_Z->axisY()->setTitleText("Z(米）");
+	mChart_Z->axisX()->setTitleText("着舰点距离");
+	mChart_Z->axisY()->setTitleText("(米）");
 	mChart_Z->setTheme(QChart::ChartThemeDark);//设置图标主题
 	mChart_Z->setTitle("");               //设置图标名称
 	lineSeries_Z_expect->setPen(QPen(QBrush(Qt::red), 2, Qt::DotLine));
@@ -92,6 +100,8 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 
 
 
+	
+	//lineSeries_landingPlaning->setPen(QPen(QBrush(Qt::blue), 2, Qt::DotLine));
 
 													   //////////////////XY的实际与期望曲线绘图
 	lineSeries_XY_true = new QLineSeries();  //创建折线系列
@@ -264,11 +274,14 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	ui.doubleSpinBox_Command_zhuoJianXV->hide();
 	ui.doubleSpinBox_Command_zhuoJianYV_Limit->hide();
 	ui.doubleSpinBox_Command_zhuoJianZV_Limit->hide();
-	ui.textBrowser_note->hide();
+	//ui.textBrowser_note->hide();
 
 	ui.doubleSpinBox_Command_zhuoJianXV->setValue(zhuoJianXV);
 	ui.doubleSpinBox_Command_zhuoJianYV_Limit->setValue(VY_MAXLimt);
 	ui.doubleSpinBox_Command_zhuoJianZV_Limit->setValue(VZ_MAXLimt);
+
+
+	wgs_enuConversion_APP = new WgsConversions;
 
 
 }
@@ -328,18 +341,30 @@ void QtWidgetsApplication1::flushMappingFunction()
 {
 	//Z坐标动态添加数据
 	//lineSeries_X_true->append(QPointF(i, qrand() % 300) );
-	double Distance = sqrt(pow(clm_control->m_fst.m_dX - data_origin_X, 2) + pow(clm_control->m_fst.m_dY - data_origin_Y, 2));
-	lineSeries_Z_true->append(QPointF(Distance, clm_control->m_fst.m_dZ));	//向折线系列添加数据
+	//double Distance = sqrt(pow(clm_control->m_fst.m_dX - data_origin_X, 2) + pow(clm_control->m_fst.m_dY - data_origin_Y, 2));
+	static int cnt = 0;
+	if (cnt >= 5)
+	{
+		double shipEnu[3];
+		wgs_enuConversion_APP->lla2enu(shipEnu, shipPointBLH, lla_ref);
+		double Distance = sqrt(pow(clm_control->m_fst.m_dX - shipEnu[0], 2) + pow(clm_control->m_fst.m_dY - shipEnu[1], 2));
+		lineSeries_Z_true->append(QPointF(Distance, clm_control->m_fst.m_dZ));	//向折线系列添加数据
+		ui.lcdNumber_Distance->display(QString("%1").arg(Distance, 6, 'f', 1));
+		cnt = 0;
+	}
+	cnt++;
+
 																			//lineSeries_Z_expect->append(QPointF(SimulationTime, Z_c));						//向折线系列添加数据
 	if (lineSeries_Z_true->points().size() > 400)									//只保存400个数据
 	{
 		lineSeries_Z_true->remove(0);
 		//lineSeries_Z_expect->remove(0);
 	}
-	mChart_Z->axisX()->setMin(Distance - 100);										//设置纵坐标轴跟随数据变化
-	mChart_Z->axisX()->setMax(Distance + 100);
-	mChart_Z->axisY()->setMin(clm_control->m_fst.m_dZ - 100);
-	mChart_Z->axisY()->setMax(clm_control->m_fst.m_dZ + 100);
+	//mChart_Z->axisX()->setMin(Distance - 100);										//设置纵坐标轴跟随数据变化
+	//mChart_Z->axisX()->setMax(Distance + 100);
+	//mChart_Z->axisX()->setRange(-1000, 100);
+	//mChart_Z->axisY()->setMin(clm_control->m_fst.m_dZ - 100);
+	//mChart_Z->axisY()->setMax(clm_control->m_fst.m_dZ + 100);
 
 
 	////XY坐标动态添加数据
@@ -433,9 +458,10 @@ void QtWidgetsApplication1::flushMappingFunction()
 	mChart_V->axisX()->setMax(SimulationTime);
 	//mChart_V->createDefaultAxes();
 
-	ui.lcdNumber_LBH_L->display(L);
-	ui.lcdNumber_LBH_B->display(B);
-	ui.lcdNumber_LBH_H->display(H);
+	ui.lcdNumber_LBH_L->display(QString("%1").arg(L, 3, 'f', 5));
+	ui.lcdNumber_LBH_B->display(QString("%1").arg(B, 3, 'f', 5));
+	ui.lcdNumber_LBH_H->display(QString("%1").arg(H, 6, 'f', 1));
+	//ui.lcdNumber_LBH_H->display(H);
 
 }
 
@@ -755,7 +781,7 @@ void QtWidgetsApplication1::ReceiveTaskManger_ModeChanged(unsigned int mode)
 		ui.doubleSpinBox_Command_zhuoJianXV->hide();
 		ui.doubleSpinBox_Command_zhuoJianYV_Limit->hide();
 		ui.doubleSpinBox_Command_zhuoJianZV_Limit->hide();
-		ui.textBrowser_note->hide();
+		//ui.textBrowser_note->hide();
 
 	}
 	else if (mode == 1)
@@ -792,7 +818,7 @@ void QtWidgetsApplication1::ReceiveTaskManger_ModeChanged(unsigned int mode)
 		ui.doubleSpinBox_Command_zhuoJianXV->hide();
 		ui.doubleSpinBox_Command_zhuoJianYV_Limit->hide();
 		ui.doubleSpinBox_Command_zhuoJianZV_Limit->hide();
-		ui.textBrowser_note->hide();
+		//ui.textBrowser_note->hide();
 
 	}
 	else if (mode == 2)
@@ -830,7 +856,7 @@ void QtWidgetsApplication1::ReceiveTaskManger_ModeChanged(unsigned int mode)
 		ui.doubleSpinBox_Command_zhuoJianXV->hide();
 		ui.doubleSpinBox_Command_zhuoJianYV_Limit->hide();
 		ui.doubleSpinBox_Command_zhuoJianZV_Limit->hide();
-		ui.textBrowser_note->hide();
+		//ui.textBrowser_note->hide();
 
 	}
 
@@ -870,7 +896,7 @@ void QtWidgetsApplication1::ReceiveTaskManger_ModeChanged(unsigned int mode)
 		ui.doubleSpinBox_Command_zhuoJianYV_Limit->setVisible(true);
 		ui.doubleSpinBox_Command_zhuoJianZV_Limit->setVisible(true);
 
-		ui.textBrowser_note->setVisible(true);
+		//ui.textBrowser_note->setVisible(true);
 
 	}
 	else
@@ -902,7 +928,7 @@ void QtWidgetsApplication1::ReceiveTaskManger_ModeChanged(unsigned int mode)
 		ui.doubleSpinBox_Command_zhuoJianXV->hide();
 		ui.doubleSpinBox_Command_zhuoJianYV_Limit->hide();
 		ui.doubleSpinBox_Command_zhuoJianZV_Limit->hide();
-		ui.textBrowser_note->hide();
+		//ui.textBrowser_note->hide();
 
 	}
 	if (mode == 6)
@@ -1085,6 +1111,29 @@ void QtWidgetsApplication1::udpReceiveZhuoJianError()
 		}
 
 	}
+	if (receiveDate.mode!=zhuoJianMode)
+	{
+		zhuoJianMode = receiveDate.mode;
+		QString modeStr;
+		switch (zhuoJianMode)
+		{
+		case 1:
+			modeStr = "光电";
+			break;
+		case 2:
+			modeStr = "雷达";
+			break;
+		case 3:
+			modeStr = "卫星";
+			break;
+		case 4:
+			modeStr = "雷达光电融合";
+			break;
+		default:
+			break;
+		}
+		ui.textBrowser_zhuoJianMode->setText(modeStr);
+	}
 	if (cnt > 40)
 	{
 		qDebug() << "receiveDate.Y0Error:" << receiveDate.Y0Error << "receiveDate.Z0Error:" << receiveDate.Z0Error;
@@ -1147,6 +1196,18 @@ void QtWidgetsApplication1::udpSendDAta()
 	str.clear();
 	str.append((char*)sendData, sizeof(UdpData));
 	sendUdpDataSocket->writeDatagram(str, QHostAddress(QString::fromStdString(udpSendTargetIP)), udpSendTargetPort);
+
+	// 本地UDP测试
+	struct  testUDP
+	{
+		double Dz=taskManager->clm_control_task->m_fst.m_dZ;
+		double Dx = taskManager->clm_control_task->m_fst.m_dY;
+	};
+	testUDP *sendData1 = new testUDP;
+	QByteArray str1;
+	str1.clear();
+	str1.append((char*)sendData1, sizeof(testUDP));
+	sendUdpDataSocket->writeDatagram(str1, QHostAddress(QString::fromStdString("127.0.0.1")), 4001);
 }
 
 void QtWidgetsApplication1::On_trigered_QAction(QAction* action)
@@ -1184,6 +1245,37 @@ void QtWidgetsApplication1::On_doubleSpinBox_Command_zhuoJianXV_valueChanged(dou
 {
 	zhuoJianXV = arg;
 }
+
+void QtWidgetsApplication1::drawLandingPlaning()
+{
+	qDebug() << "draw";
+	double maxY = 0;
+	double minY = 0;
+	double minX = 0;
+	double maxX = 0;
+	for (auto obj:landingPlaningInfo)
+	{
+		maxX = max(maxX, obj[0]);
+		maxY = max(maxY, obj[1]);
+		lineSeries_landingPlaning->append(QPointF(obj[0], obj[1]));	//向折线系列添加数据
+		qDebug() << obj[0] << obj[1];
+	}
+	//for (auto obj : landingPlaningInfo)
+	//{
+	//	lineSeries_landingPlaning->append(QPointF(obj[0], obj[1]));	//向折线系列添加数据
+	//	qDebug() << obj[0] << obj[1];
+	//}
+	//lineSeries_landingPlaning->append(QPointF(0, 0));
+	//lineSeries_landingPlaning->append(QPointF(100, 0));
+	//lineSeries_landingPlaning->append(QPointF(101, 100));
+	qDebug()<<"X:" << minX << maxX;
+	mChart_Z->axisX()->setRange(minX, maxX);
+	mChart_Z->axisY()->setRange(minY, maxY);
+	
+}
+
+
+
 
 //////////////////////////////////////////////////////////////////////////ZHHK429接收
 HANDLE g_CardHandle;		//定义为全局变量，再global中声明

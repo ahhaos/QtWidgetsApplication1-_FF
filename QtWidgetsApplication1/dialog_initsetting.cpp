@@ -8,10 +8,12 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include "math.h"
 #include "QFile"
+#include "wgs_conversions.h"
 #ifndef PI
 #define PI 3.1415926535892932384626
 #endif
 
+using namespace std;
 Dialog_initsetting::Dialog_initsetting(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::Dialog_initsetting)
@@ -90,7 +92,7 @@ void Dialog_initsetting::On_ok_button_clicked()
 	
 
 	emit stateInit();
-	Dialog_initsetting::On_pushButton_saveTargeNode_clicked();
+	//Dialog_initsetting::On_pushButton_saveTargeNode_clicked();
 
 	Dialog_initsetting::~Dialog_initsetting();
 }
@@ -113,11 +115,8 @@ void Dialog_initsetting::On_pushButton_saveTargeNode_clicked()
 	{
 		QByteArray line = file.readLine();
 		QString str(line);
-		//qDebug() << str;
-		//ui->textBrowser_targetNodes->append(str);
 
 		vector<double>temp;
-
 		//读入目标序列的经纬高
 		temp.clear();
 		QString tmpstr;
@@ -182,26 +181,107 @@ void Dialog_initsetting::On_pushButton_saveTargeNode_clicked()
 	data_origin_L0 = targetNode_L_B_H[0][0];
 	data_origin_B0 = targetNode_L_B_H[0][1];
 	data_origin_H0 = targetNode_L_B_H[0][2];
-
-
+	// 初始化东北天ENU的坐标原点
+	lla_ref[0] = data_origin_B0;
+	lla_ref[1] = data_origin_L0;
+	lla_ref[2] = 0;
 
 	ui->lineEdit_Lontitude->setText(QString::number(data_origin_L0, 10, 4));
 	ui->lineEdit_Latitude->setText(QString::number(data_origin_B0, 10, 4));
 	ui->lineEdit_Altitude->setText(QString::number(data_origin_H0, 10, 4));
+	
+	
 
 
 
 
+	vector<vector<double>>::iterator it=targetNode_L_B_H.begin();
+	WgsConversions wgs_enuConv;
 
-	vector<vector<double>>::iterator it;
-	//vector<double>::iterator it1;
+	while (it != targetNode_L_B_H.end())
+	{
+		double enuXYZ[3];
+		double lla[3] = { (*it)[1],(*it)[0] ,(*it)[2] };
+		wgs_enuConv.lla2enu(enuXYZ, lla, lla_ref);
+		vector<double> tmp = { enuXYZ[0],enuXYZ[1],enuXYZ[2] };
+		targetNode_X_Y_Z.push_back(tmp);
+		it++;
+
+	}
+	it = targetNode_X_Y_Z.begin();
+	while (it != targetNode_X_Y_Z.end())
+	{
+		qDebug() << "X:" << (*it)[0] << "Y:" << (*it)[1] << "Z:" << (*it)[2];
+		it++;
+	}
 
 
-	double jishu = 0;
+	//设置初始航向
+	double temp_ = (targetNode_X_Y_Z[1][1] - targetNode_X_Y_Z[0][1]) / (targetNode_X_Y_Z[1][0] - targetNode_X_Y_Z[0][0]);
+
+	if (targetNode_X_Y_Z[1][0] - targetNode_X_Y_Z[0][0] < 0)
+	{
+		data_origin_Chi = PI + atan(temp_);
+
+	}
+	else
+	{
+		data_origin_Chi = atan(temp_);
+	}
+	if (data_origin_Chi < -PI)
+		data_origin_Chi += (2 * PI);
+	if (data_origin_Chi > PI)
+		data_origin_Chi -= (2 * PI);
 
 
 
+	// 读取刨面信息
+	QFile file_2("info.txt");
+	if (!file_2.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		qDebug() << "Can't open the info.txt!" << endl;
+	}
+	while (!file_2.atEnd())
+	{
+		QByteArray line = file_2.readLine();
+		QString str(line);
+		qDebug() << str;
+		vector<double>temp;
+		//读入目标序列的经纬高
+		temp.clear();
+		QString tmpstr;
+		int indx = 0;
+		if (str[indx] == '#')
+			continue;
+		while (indx < str.size() && str[indx] != ' ' && str[indx] != '\\'&& str[indx] != '\n')   //刨面距离
+		{
+			tmpstr += str[indx];
+			indx++;
+		}
+		temp.push_back(tmpstr.toDouble());
+		tmpstr.clear();
+		while (indx < str.size() && str[indx] == ' ')
+		{
+			indx++;
+		}
 
+		while (indx < str.size() && str[indx] != ' ' && str[indx] != '\\'&& str[indx] != '\n')   //该距离对应的高度
+		{
+			tmpstr += str[indx];
+			indx++;
+		}
+		temp.push_back(tmpstr.toDouble());
+		tmpstr.clear();
+		while (indx < str.size() && str[indx] == ' ')
+		{
+			indx++;
+		}
+		landingPlaningInfo.push_back(temp);
+	}
+	//for (auto obj : landingPlaningInfo)
+	//{
+	//	qDebug() << obj[0] << obj[1];
+	//}
 
 }
 
@@ -242,6 +322,7 @@ void Dialog_initsetting::On_pushButton_Debug_clicked()
 	targetNode_L_B_H.clear();
 	targetNode_X_Y_Z.clear();
 	targetNode_Name.clear();
+
 	QFile file("targetNodes.txt");
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -309,6 +390,55 @@ void Dialog_initsetting::On_pushButton_Debug_clicked()
 			indx++;
 		}
 		targetNode_L_B_H.push_back(temp);
+	}
+
+
+	QFile file_2("info.txt");
+	if (!file_2.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		qDebug() << "Can't open the info.txt!" << endl;
+	}
+	while (!file_2.atEnd())
+	{
+		QByteArray line = file_2.readLine();
+		QString str(line);
+		qDebug() << str;
+		ui->textBrowser_targetNodes->append(str);
+
+		vector<double>temp;
+
+		//读入目标序列的经纬高
+		temp.clear();
+		QString tmpstr;
+		int indx = 0;
+		while (indx < str.size() && str[indx] != ' ' && str[indx] != '\\'&& str[indx] != '\n')   //刨面距离
+		{
+			tmpstr += str[indx];
+			indx++;
+		}
+		temp.push_back(tmpstr.toDouble());
+		tmpstr.clear();
+		while (indx < str.size() && str[indx] == ' ')
+		{
+			indx++;
+		}
+
+		while (indx < str.size() && str[indx] != ' ' && str[indx] != '\\'&& str[indx] != '\n')   //该距离对应的高度
+		{
+			tmpstr += str[indx];
+			indx++;
+		}
+		temp.push_back(tmpstr.toDouble());
+		tmpstr.clear();
+		while (indx < str.size() && str[indx] == ' ')
+		{
+			indx++;
+		}
+		landingPlaningInfo.push_back(temp);
+	}
+	for (auto obj : landingPlaningInfo)
+	{
+		qDebug() << obj[0] << obj[2];
 	}
 
 }

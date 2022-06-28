@@ -13,9 +13,12 @@
 //#define Mode_ClassicSceneNavigation			7		//典型场景导航模式
 
 #include "Control/CloseLoopModel.h"
-#include "Read_txt.h"
+#include "wgs_conversions.h"
+//#include "Read_txt.h"
 #include "pathGeneration.h"
 //#include "trackGeneration.h"
+#include "PID.h"
+
 
 struct Mode_default_VxVyVxyz		//用于存储切换到默认飞行模式时的各个方向的速度
 {
@@ -36,9 +39,10 @@ public:
 	pathGeneration* pathGenerator;
 	pathGeneration* pathGenerator_2;
 	int haveArrivedNodeNumber;
-
+	Pid_control* PID_Chi;
 	//---------------------------------------
-	CRead_txt* txt_transmit;
+	WgsConversions* wgs_enuConversion;
+	//CRead_txt* txt_transmit;
 	double Xtt; //东北天坐标
 	double Ytt;
 	double Ztt;
@@ -81,6 +85,7 @@ private:
 		void targetArrived(int arg);
 		void drawExpect_Z();
 		void serialSendSignal();
+		void drawLandingPlaning();
 };
 
 

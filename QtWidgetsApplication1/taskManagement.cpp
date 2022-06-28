@@ -7,7 +7,8 @@
 
 taskManagement::taskManagement(CCloseLoopModel* clm_control)
 {
-	txt_transmit = new CRead_txt;
+	wgs_enuConversion = new WgsConversions;
+	//txt_transmit = new CRead_txt;
 	clm_control_task = clm_control;								//将闭环仿真系统指针引入该类，直接在该类中实现闭环系统控制
 	currentMode	= Mode_default;									//默认飞行状态为航向和高度保持
 	//defaultStatus.Vxyz = data_origin_V;							//获得飞机的初始速度作为控制器的初始期望速度
@@ -19,7 +20,7 @@ taskManagement::taskManagement(CCloseLoopModel* clm_control)
 	Y_c = clm_control_task->m_fst.m_dY;
 	Z_c = clm_control_task->m_fst.m_dZ;
 
-
+	PID_Chi = new Pid_control;
 	//trackGenerator = new trackGeneration(data_time);
 
 }
@@ -83,9 +84,9 @@ void taskManagement::currentModeSet(unsigned int mode)
 
 	case Mode_Waypoint_2:
 		//trackGenerator = new trackGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z);
-		pathGenerator = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, 70);
-		pathGenerator_2 = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, 70);
-		emit drawExpect_Z();
+		pathGenerator = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, follow_V);
+		pathGenerator_2 = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, follow_V);
+		//emit drawExpect_Z();
 		//Command_VKH[0] = clm_control_task->m_fst.m_dV;
 		//Command_VKH[1] = clm_control_task->m_fst.m_dChi;
 		//Command_VKH[2] = clm_control_task->m_fst.m_dZ;				//将当前的速度、航向、高度作为默认值，防止出现无数据情况，可后续重新获取更改指令
@@ -94,14 +95,15 @@ void taskManagement::currentModeSet(unsigned int mode)
 	
 	case Mode_ZhuoJianFangZhen:
 	{
-		//pathGenerator = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, 50);
-		//pathGenerator_2 = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, 50);
+		//pathGenerator = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, follow_V);
+		//pathGenerator_2 = new pathGeneration(clm_control_task->m_fst.m_dX, clm_control_task->m_fst.m_dY, clm_control_task->m_fst.m_dZ, targetNode_X_Y_Z, follow_V);
 		//emit drawExpect_Z();
 
 		//asdf 
 		X_c = clm_control_task->m_fst.m_dX;
 		Y_c = clm_control_task->m_fst.m_dY;
 		Z_c = clm_control_task->m_fst.m_dZ;
+		emit drawLandingPlaning();
 	}
 	}
 	currentMode = mode ;
@@ -113,8 +115,11 @@ void taskManagement::Update()
 	double curZ = clm_control_task->m_fst.m_dZ;
 	double step_second = data_time / 1000;
 	static bool pianChaZhuojian = false;
-
-
+	static int targetCnt = 0;
+	static double baseChi=45;
+	static double zhuojianXYZV[4];
+	static double hc = 0;
+	double tmp;
 	switch (currentMode)
 	{
 	case Mode_default:											//应飞指令，输入速度、航向、高度Command_VKH[0], Command_VKH[1], Command_VKH[2]
@@ -299,65 +304,62 @@ void taskManagement::Update()
 		break;
 	case Mode_ZhuoJianFangZhen:
 		SimulationTime += step_second;
-		//YZError[0] = 0 - clm_control_task->m_fst.m_dY;
-		//YZError[1] = 1600 - clm_control_task->m_fst.m_dZ;
-		
-		//if (abs(VY_MAXLimt*step_second) <abs( YZError[0]))		// 对侧向速度进行限制，然后计算点
-		//{
-		//	if(YZError[0]<0)
-		//		Y_c = Y_c - VY_MAXLimt*step_second;
-		//	else
-		//		Y_c = Y_c + VY_MAXLimt*step_second;
-		//	YZ_V[0] = VY_MAXLimt;
-		//}
-		//else
-		//{
-		//	Y_c = Y_c + YZError[0];
-		//	YZ_V[0] = YZError[0]/ step_second;
-		//}
-		//if (abs(VZ_MAXLimt*step_second) < (YZError[1]))	// 对纵向侧向速度进行限制，然后计算点
-		//{
-		//	if(YZError[1]<0)
-		//		Z_c = Z_c - VZ_MAXLimt*step_second;
-		//	else 
-		//		Z_c = Z_c + VZ_MAXLimt*step_second;
-		//	YZ_V[1] = VZ_MAXLimt;
-		//} 
-		//else
-		//{
-		//	Z_c = Z_c + YZError[1];
-		//	YZ_V[1] = YZError[1] / step_second;
-		//}
-		
-		//X_c = clm_control_task->m_fst.m_dX + sqrt(pow(ZhuoJianZongV, 2) - pow(YZ_V[0], 2) - pow(YZ_V[1], 2)); // 计算X向位置
-		//Y_c = 0;
-		//Z_c = 1600;
 
-		//qDebug() << "running";
-		//Command_XYZ=trackGenerator->getNextTrackNode(80);
+		//if (!pianChaZhuojian)
+		//{
+		//	haveArrivedNodeNumber = pathGenerator->getNode(X_c, Y_c, Z_c);
+		//	if (haveArrivedNodeNumber != -3)
+		//	{
+		//		emit targetArrived(haveArrivedNodeNumber);
+		//	}
+		//	if (haveArrivedNodeNumber == -2)
+		//	{
+		//		//currentModeSet(Mode_default);
+		//		pianChaZhuojian = true;
+		//		X_c = clm_control_task->m_fst.m_dX;
+		//		Y_c = clm_control_task->m_fst.m_dY;
+		//		Z_c = clm_control_task->m_fst.m_dZ;
+		//	}
+		//	//
+		//	//qDebug() << X_c << ";" << Y_c << ";" << Z_c;
+		//	clm_control_task->Follow(X_c, Y_c, Z_c, 0, 0, 0);
+		//	clm_control_task->Update(X_c, Y_c, Z_c, 0, 0, 0);
+		//}
 		if (!pianChaZhuojian)
 		{
-			haveArrivedNodeNumber = pathGenerator->getNode(X_c, Y_c, Z_c);
-			if (haveArrivedNodeNumber != -3)
+			Command_XYZV[0] = targetNode_X_Y_Z[targetCnt][0];
+			Command_XYZV[1] = targetNode_X_Y_Z[targetCnt][1];
+			Command_XYZV[2] = targetNode_X_Y_Z[targetCnt][2];
+			Command_XYZV[3] = 66.6;
+			//qDebug() << Command_XYZV[0] << Command_XYZV[1] << Command_XYZV[2] << Command_XYZV[3];
+			if (Command_XYZV[2] - curZ > 100)
 			{
-				emit targetArrived(haveArrivedNodeNumber);
+				clm_control_task->Input_XYZ_V(Command_XYZV[0], Command_XYZV[1], clm_control_task->m_fst.m_dZ + 10, Command_XYZV[3]);
 			}
-			if (haveArrivedNodeNumber == -2)
+			else if (Command_XYZV[2] - curZ < -100)
 			{
-				//currentModeSet(Mode_default);
-				pianChaZhuojian = true;
-				X_c = clm_control_task->m_fst.m_dX;
-				Y_c = clm_control_task->m_fst.m_dY;
-				Z_c = clm_control_task->m_fst.m_dZ;
+				clm_control_task->Input_XYZ_V(Command_XYZV[0], Command_XYZV[1], clm_control_task->m_fst.m_dZ - 10, Command_XYZV[3]);
+			}
+			else {
+				clm_control_task->Input_XYZ_V(Command_XYZV[0], Command_XYZV[1], Command_XYZV[2], Command_XYZV[3]);
+			}
 
+			if (sqrt((clm_control_task->m_fst.m_dX - Command_XYZV[0])*(clm_control_task->m_fst.m_dX - Command_XYZV[0]) +
+				(clm_control_task->m_fst.m_dY - Command_XYZV[1])*(clm_control_task->m_fst.m_dY - Command_XYZV[1])) < arriveDistanceFlag * 10)												//以飞机距离目标点的距离小于一百作为判断是否达到目标点的标准
+			{
+				targetCnt++;
+				if (targetCnt >= targetNode_X_Y_Z.size())
+				{
+					pianChaZhuojian = true;
+					baseChi = (clm_control_task->m_fst.m_dChi)/PI*180;
+					zhuojianXYZV[0] = clm_control_task->m_fst.m_dX + follow_V * 2 * cos(clm_control_task->m_fst.m_dChi);
+					zhuojianXYZV[1] = clm_control_task->m_fst.m_dX + follow_V * 2 * sin(clm_control_task->m_fst.m_dChi);
+					zhuojianXYZV[2] = clm_control_task->m_fst.m_dZ;
+					hc = clm_control_task->m_fst.m_dZ;
+				}
 			}
-			//
-			//qDebug() << X_c << ";" << Y_c << ";" << Z_c;
-			clm_control_task->Follow(X_c, Y_c, Z_c, 0, 0, 0);
-			clm_control_task->Update(X_c, Y_c, Z_c, 0, 0, 0);
+			clm_control_task->Update();
 		}
-
-		////////////////////
 		else
 		{
 			if (YZError[0] > VY_MAXLimt)
@@ -377,47 +379,16 @@ void taskManagement::Update()
 			{
 				YZError[1] = (-VZ_MAXLimt);
 			}
-
-			//qDebug() << "YError:" << YZError[0] << "ZError:" << YZError[1];
-			if (X_c>0&&(X_c < clm_control_task->m_fst.m_dX-3))
-			{
-				X_c = clm_control_task->m_fst.m_dX+ zhuoJianXV * step_second;
-			}
-			else
-			{
-				X_c += zhuoJianXV * step_second;
-			}
-			
-			Z_c = Z_c + YZError[1] * step_second;
-			Y_c = Y_c + YZError[0] * step_second;
-
-			clm_control_task->Follow(X_c, Y_c, Z_c, 0, 0, 0);
+			//qDebug() << "YZError[0]" << YZError[0];
+			//tmp= PID_Chi->PID_realize(YZError[0]);
+			//qDebug() << "tmp" << tmp;
+			//tmp += baseChi;
+			//qDebug() << "tmp2" << tmp;
+			hc += (YZError[1]*step_second);
+			clm_control_task->Input_VKH(follow_V, (PID_Chi->PID_realize(YZError[0])+ baseChi) /180*PI, hc);
+			//clm_control_task->Input_XYZ_V(follow_V, tmp / 180 * PI, 300,1);
 			clm_control_task->Update();
 
-			//YZError[1] = 0;
-			//YZError[0] = 0;
-			//qDebug() << "Xc:" << X_c << "Yc:" << Y_c << "Zc:" << Z_c;
-			//qDebug() << "clm_control_task->m_fst.m_dY" << clm_control_task->m_fst.m_dY;
-			//clm_control_task->Follow(clm_control_task->m_fst.m_dX + 50 * step_second, 0, 1600, 0, 0, 0);
-
-			//clm_control_task->Update();
-
-			//if (clm_control_task->m_fst.m_dV > 1)//使用飞机和速度小于1作为停止标准
-			//{
-			//	//double Command_xiaHua[3] = { 70,0,0 };				//下滑指令，速度，角度，着舰高度
-
-			//	X_c += cos(xiaHuaChi)*cos(Command_xiaHua[1])*Command_xiaHua[0] * data_time / 1000;
-			//	Y_c += sin(xiaHuaChi)*cos(Command_xiaHua[1])*Command_xiaHua[0] * data_time / 1000;
-			//	Z_c += sin(Command_xiaHua[1])*Command_xiaHua[0] * data_time / 1000;
-			//	//qDebug() << X_c << ";" << Y_c << ";" << Z_c << ";";
-			//}
-
-			// 625日方案
-			//clm_control_task->Input_VKH(zhuoJianXV, YZError[0]*0.05, Z_c = Z_c + YZError[1] * step_second);
-			//clm_control_task->Update();
-
-			//clm_control_task->Follow(X_c, Y_c, Z_c, 0, 0, 0);
-			//clm_control_task->Update(X_c, Y_c, Z_c, 0, 0, 0);
 		}
 		break;
 
@@ -426,39 +397,26 @@ void taskManagement::Update()
 		break;
 	}
 
-	//计算东北天原点的坐标
-	txt_transmit->yuandian(data_origin_L0, data_origin_B0, data_origin_H0);
-	//输出东北天坐标
-	Xtt = clm_control_task->m_fst.m_dX;
-	Ytt = clm_control_task->m_fst.m_dY;
-	Ztt = clm_control_task->m_fst.m_dZ;
-	//---------------------------------------
-	//实现东北天到地心的转换
-	txt_transmit->transmitDbt2Dx(Xtt, Ytt, Ztt);
-	Xdd = txt_transmit->xdd;
-	Ydd = txt_transmit->ydd;
-	Zdd = txt_transmit->zdd;
-	//实现地心到经纬度的转换
-	txt_transmit->transmitDx2Lbh(Xdd, Ydd, Zdd);
-	//实时输出的经纬高
-	B = txt_transmit->latitude;
-	L = txt_transmit->longitude;
-	H = txt_transmit->altitude;
-	//---------------------------------------
-	txt_transmit->VtransmitDbt2Dx(clm_control_task->m_fst.m_Vx, clm_control_task->m_fst.m_Vy, clm_control_task->m_fst.m_Vz);
-	VXdd = txt_transmit->Vxdd;
-	VYdd = txt_transmit->Vydd; 
-	VZdd = txt_transmit->Vzdd; 
+	//double lla_ref[3] = { data_origin_B0,data_origin_L0 ,0 };
+	double cur_enu[3] = { clm_control_task->m_fst.m_dX,clm_control_task->m_fst.m_dY,clm_control_task->m_fst.m_dZ };
+	double cur_lla[3];
+	//qDebug() << "enuX:" << cur_enu[0] << "enuY:" << cur_enu[1] << "enuZ:" << cur_enu[2];
+	//qDebug() << "lla_ref" << lla_ref[0] << lla_ref[1] << lla_ref[2];
+	wgs_enuConversion->enu2lla(cur_lla, cur_enu, lla_ref);
+	B = cur_lla[0];
+	L = cur_lla[1];
+	H = cur_lla[2];
 
 
-	static int cnt = 0;
-	if (cnt>=40)
-	{
-		qDebug() << "dZ:" << clm_control_task->m_fst.m_dZ;
-		qDebug() << "H" << H;
-		cnt = 0;
-	}
-	cnt++;
+
+	//static int cnt = 0;
+	//if (cnt>=40)
+	//{
+	//	qDebug() << "dZ:" << clm_control_task->m_fst.m_dZ;
+	//	qDebug() << "H" << H;
+	//	cnt = 0;
+	//}
+	//cnt++;
 
 }
 
