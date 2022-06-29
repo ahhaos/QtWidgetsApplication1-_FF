@@ -19,9 +19,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include "wgs_conversions.h"
-#include "ZHHK429_dll.h"
-
-#pragma comment(lib,"ZHHK429.lib")
+#include "shiZhu429.h"
 
 
 #define ch_rx               0x00 // 接收通道
@@ -40,12 +38,10 @@ public:
     QtWidgetsApplication1(QWidget *parent = Q_NULLPTR);
 	
 
-
-	
-
 	QTimer* flushMappingTimer;
 	QTimer* consoleOutTimer;
 	QTimer* serialPortOutTimer;
+	QTimer* cav429OutTimer;
 
 	QTimer* udpSendTimer;
 	QUdpSocket *leverUdpSocket;
@@ -99,23 +95,7 @@ public:
 	};
 
 
-
-	//ZHHK429相关
-	DWORD g_ThreadId;
-	HANDLE g_ThreadHandle;
-	//DWORD WINAPI WorkerFun(LPVOID lpParam);
-	
-
-	
-	ZHHK429_RX_CFG_STRUCT              RxCfg;
-	ZHHK429_LABEL_TABLE_STRUCT         LabelTable;
-	ZHHK429_TX_CFG_STRUCT              TxCfg;
-
-	void ZHHK429Init();
-
-	void ZHHK429Send();
-
-	void ZHHK429test();
+	cav429* myCAV429;
 
 
 
@@ -185,6 +165,7 @@ public slots:
 	void On_trigered_QAction(QAction*);
 
 	void On_checkBox_isSerialPortSend_StateChange(int arg);
+	void On_checkBox_is429Send_StateChange(int arg);
 
 	void On_doubleSpinBox_Command_zhuoJianYV_Limit_valueChanged(double arg);
 
@@ -193,6 +174,8 @@ public slots:
 	void On_doubleSpinBox_Command_zhuoJianXV_valueChanged(double arg);
 
 	void drawLandingPlaning();
+
+	void use429SendSimData();
 
 signals:
 	void test();

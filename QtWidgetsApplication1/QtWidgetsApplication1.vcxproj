@@ -198,12 +198,12 @@
     <None Include="A429_API_DLL.dll" />
     <None Include="DDSLib\Dlls\SysWOW64\vcruntime140d.dll" />
     <None Include="PCI_A429.dll" />
-    <None Include="ZHHK429.dll" />
+    <None Include="USB_A429.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="A429_API_DLL.lib" />
     <Library Include="PCI_A429.lib" />
-    <Library Include="ZHHK429.lib" />
+    <Library Include="USB_A429.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

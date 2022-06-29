@@ -117,8 +117,8 @@ double data_origin_X = 0;
 double data_origin_Y = 0;
 double data_origin_Z = 400;
 //飞机起始经纬高
-double data_origin_L0 = 119.55;
-double data_origin_B0 = 40;
+double data_origin_L0 = 119.55;	//初始经度
+double data_origin_B0 = 40;//初始维度
 double data_origin_H0 = 400;
 
 // 东北天坐标系原点在经纬高坐标系中的位置，及参考点

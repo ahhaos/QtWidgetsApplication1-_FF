@@ -33,6 +33,9 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	consoleOutTimer = new QTimer();
 	connect(consoleOutTimer, SIGNAL(timeout()), this, SLOT(consoleOut_slot()));
 
+	cav429OutTimer = new QTimer();
+	connect(cav429OutTimer, SIGNAL(timeout()), this, SLOT(use429SendSimData()));
+
 
 	connect(taskManager, SIGNAL(ModeChanged(unsigned int)), this, SLOT(ReceiveTaskManger_ModeChanged(unsigned int)));
 	connect(taskManager, SIGNAL(targetArrived(int)), this, SLOT(ReceiveTaskManger_targetArrived(int)));
@@ -65,6 +68,11 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	connect(udpSendTimer, SIGNAL(timeout()), this, SLOT(udpSendDAta()));
 
 	connect(taskManager, SIGNAL(drawLandingPlaning()), this, SLOT(drawLandingPlaning()));
+
+
+
+
+
 
 	////////////////Z的实际与期望曲线绘图
 	lineSeries_Z_true = new QLineSeries();  //创建折线系列
@@ -283,7 +291,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 
 	wgs_enuConversion_APP = new WgsConversions;
 
-
+	myCAV429 = new cav429;
 }
 
 void QtWidgetsApplication1::stateInitSlot()			//初始化仿真状态
@@ -946,7 +954,8 @@ void QtWidgetsApplication1::On_initsetting_triggerd()
 {
 	//
 
-	//qDebug() << "---";
+	qDebug() << "---!!!___";
+	
 }
 
 void QtWidgetsApplication1::On_checkBox_selectAlpha_stateChanged(int arg)
@@ -1215,8 +1224,8 @@ void QtWidgetsApplication1::On_trigered_QAction(QAction* action)
 	//qDebug() << action;
 	if (action->toolTip() == "ZHHK429Init_action")
 	{
-		ZHHK429Init();
 		qDebug() << "ZHHK429Init_action";
+		myCAV429->init();
 	}
 
 }
@@ -1231,6 +1240,19 @@ void QtWidgetsApplication1::On_checkBox_isSerialPortSend_StateChange(int arg) {
 		serialPortOutTimer->stop();
 	}
 }
+
+void QtWidgetsApplication1::On_checkBox_is429Send_StateChange(int arg) {
+	if (arg)
+	{
+		cav429OutTimer->start(100);
+		
+	}
+	else
+	{
+		cav429OutTimer->stop();
+	}
+}
+
 
 void QtWidgetsApplication1::On_doubleSpinBox_Command_zhuoJianYV_Limit_valueChanged(double arg)
 {
@@ -1275,359 +1297,36 @@ void QtWidgetsApplication1::drawLandingPlaning()
 }
 
 
-
-
-//////////////////////////////////////////////////////////////////////////ZHHK429接收
-HANDLE g_CardHandle;		//定义为全局变量，再global中声明
-BOOL g_isRun = FALSE;
-
-DWORD WINAPI WorkerFun(LPVOID lpParam)
+void  QtWidgetsApplication1::use429SendSimData()
 {
-	int i = 0;
-	DWORD RxDataCnt = 0;
-	DWORD dwRxBuf[FIFO_RMAX]; // 接收数据缓存
-
-							  // 轮询方式接收消息
-	while (g_isRun)
+	simDataStruct_429 myData;
+	static int cnt = 0;
+	static double lastVx = clm_control->m_fst.m_Vx;
+	static double lastVy = clm_control->m_fst.m_Vy;
+	static double lastVz = clm_control->m_fst.m_Vz;
+	if (cnt <1)
 	{
-		//printf("g_isRun");
-		// 读缓存中DATA
-		if ((ZHHK429_RX_BufferData(g_CardHandle, ch_rx, 0, &RxDataCnt, dwRxBuf)) == 1)
-		{
-			// 根据CNT,循环读出
-			for (i = 0; i < RxDataCnt; i++)
-			{
-				printf("%4x\n", dwRxBuf[i]);
-			}
-		}
-	}
-
-	return 0;
-}
-
-//////////////////////////////////////////////////////////////////////////ZHHK429初始化
-void QtWidgetsApplication1::ZHHK429Init()
-{
-	// ****************************************************************
-	// 初始化板卡
-	// ****************************************************************
-
-	// ================打开板卡================
-	if (ZHHK429_Open(&g_CardHandle, 0) != 0)
-	{
-		g_CardHandle = NULL;
-		qDebug() << "找不到ZHHK429板卡!\n";
+		cnt++;
 		return;
 	}
-	else
-	{
-		if (g_CardHandle == NULL)
-		{
-			qDebug() << "找不到ZHHK429板卡!\n";
-			return;
-		}
-	}
-	// 全局复位
-	if (ZHHK429_Reset(g_CardHandle) != 0)
-	{
-		qDebug() << "复位ZHHK429板卡失败!\n";
-		return;
-	}
-
-
-	// ****************************************************************
-	// 接收单元
-	// ****************************************************************
-
-	// 复位板卡接收通道
-	ZHHK429_RX_Reset(g_CardHandle, ch_rx);
-
-	// ================RX参数配置==============
-	RxCfg.Cfg_BaudCounter = 15; // 速率为100K. 计算公式：48M/(32*100K) = 15.
-	RxCfg.Cfg_ParityEnable = 0; // 无校验
-	RxCfg.Cfg_ParityMode = 0; // 校验模式选择
-	RxCfg.Cfg_BusOrderEnable = 0; // 数据模式选择
-	RxCfg.Cfg_SDDecoderEnable = 0; // SD解码不使能
-	RxCfg.Cfg_SDDecoderData = 0; // SD[1：0]
-	RxCfg.Cfg_SelfTestEnable = 1; // 自环测试
-	ZHHK429_RX_Configure(g_CardHandle, ch_rx, &RxCfg);
-
-	// 接收缓存触发深度(采用中断接收方式下使用)
-	// ZHHK429_RX_TriggerDepth (g_CardHandle, ch_rx, 0);
-
-	// 设置接收时标使能
-	ZHHK429_RX_TimeTagMode(g_CardHandle, ch_rx, 0);
-
-	// 设置Lable过滤表使能
-	// ZHHK429_RX_LableFilterEnable (g_CardHandle, ch_rx, 0);
-
-	// 清空接收缓冲区
-	ZHHK429_RX_BufferClr(g_CardHandle, ch_rx);
-
-	// 接收使能
-	ZHHK429_RX_RecvEnable(g_CardHandle, ch_rx, 1);
-
-
-	// ****************************************************************
-	// 发送单元
-	// ****************************************************************
-
-	// 复位板卡发送通道
-	ZHHK429_TX_Reset(g_CardHandle, ch_tx);
-
-	// ================TX参数配置==============
-	TxCfg.Cfg_BaudCounter = 15; // 速率为100K. 计算公式：48M/(32*100K) = 15.
-	TxCfg.Cfg_ParityEnable = 0; // 无校验
-	TxCfg.Cfg_ParityMode = 0; // 校验模式选择
-	TxCfg.Cfg_BusOrderEnable = 0; // 数据模式选择
-	ZHHK429_TX_Configure(g_CardHandle, ch_tx, &TxCfg);
-
-	// 发送缓存触发深度(暂未使用)
-	// ZHHK429_TX_TriggerDepth (g_CardHandle, ch_tx, TxTriggerDepth);
-
-	// 字间隔时间设置(单位50us)
-	ZHHK429_TX_TimerIntervalWord(g_CardHandle, ch_tx, 0x00000000);
-
-	// 帧间隔时间设置 (单位50us。设置为0时，表示非帧重发模式)
-	ZHHK429_TX_TimerIntervalFrame(g_CardHandle, ch_tx, 0x00004E20);
-
-
-
-	// ****************************************************************
-	// 创建消息接收线程
-	// ****************************************************************
-	if (g_CardHandle != NULL)
-	{
-		g_isRun = TRUE;
-		g_ThreadHandle = CreateThread(NULL,                // no security attributes
-			0,                   // use default stack size
-			WorkerFun,           // thread function
-			NULL,                // argument to thread function
-			CREATE_SUSPENDED,    // use default creation flags
-			&g_ThreadId);        // returns the thread identifier
-		if (g_ThreadHandle == NULL)
-		{
-			printf("无法创建接收线程,请重新启动应用程序!\n");
-			g_isRun = FALSE;
-		}
-		SetThreadPriority(g_ThreadHandle, THREAD_PRIORITY_NORMAL);
-		SetThreadPriority(g_ThreadHandle, THREAD_PRIORITY_BELOW_NORMAL);
-		ResumeThread(g_ThreadHandle);
-	}
-
-
-	return;
-}
-
-void QtWidgetsApplication1::ZHHK429Send()
-{
-	int i = 0;
-	DWORD TxFIFOStatus = 0;
-	DWORD length = 0;
-	DWORD dwTxBuf[FIFO_TMAX]; // 发送数据缓存
-							  // ================TX数据准备==============
-							  // 获取发送数据长度
-	memset(dwTxBuf, 0, sizeof(DWORD)*FIFO_TMAX);
-
-	if (tx_DataLength == 0)
-	{
-		printf("发送数据量不能为0!");
-		return;
-	}
-	if (tx_DataLength >= FIFO_TMAX)
-	{
-		printf("发送数据量太大!");
-		return;
-	}
-
-	// 发送缓存填充有序数据数据
-	i = 0;
-	while (i < tx_DataLength)
-	{
-		dwTxBuf[i] = 0x11110000 + i;
-		i++;
-	}
-
-	// ================TX数据发送==============
-	// 读取TX FIFO状态，检测是否空
-	ZHHK429_TX_BufferStatus(g_CardHandle, ch_tx, 0, &TxFIFOStatus);
-	if ((TxFIFOStatus & FIFOEmpty) == FIFOEmpty) // FIFO状态为空
-	{
-		// 将数据写入Tx FIFO
-		ZHHK429_TX_BufferData(g_CardHandle, ch_tx, 0, tx_DataLength, dwTxBuf);
-		// 启动发送
-		ZHHK429_TX_Start(g_CardHandle, ch_tx);
-	}
-	else
-	{ // Tx FIFO is not empty
-		printf("硬件缓冲区还有未发送完的数据!");
-	}
-
-
-
-
-
-	return;
+	double Vx,Vy,Vz;
+	Vx = clm_control->m_fst.m_Vx;
+	Vy = clm_control->m_fst.m_Vy;
+	Vz = clm_control->m_fst.m_Vz;
+	myData.origin_Lon = data_origin_L0;
+	myData.origin_Lat = data_origin_B0;
+	myData.inertial_Barometric_Altitude = data_origin_H0;
+	myData.chi = taskManager->clm_control_task->m_fst.m_dChi * 180 / PI;
+	myData.theta = (clm_control->m_fst.m_dGama + clm_control->m_fst.m_dAlpha) * 180 / PI;
+	myData.phi = clm_control->m_fst.m_dMu;
+	myData.acc_East = Vx - lastVx;
+	myData.acc_North = Vy - lastVy;
+	myData.acc_Up = Vz - lastVz;
+	myData.vel_North = Vy;
+	myData.vel_East = Vx;
+	myData.vel_Up = Vz;
+	myCAV429->sendSimData(myData);
 }
 
 
-void QtWidgetsApplication1::ZHHK429test()
-{
-	int i = 0;
-	DWORD TxFIFOStatus = 0;
-	DWORD length = 0;
-	DWORD dwTxBuf[FIFO_TMAX]; // 发送数据缓存
 
-							  // ****************************************************************
-							  // 初始化板卡
-							  // ****************************************************************
-
-							  // ================打开板卡================
-	if (ZHHK429_Open(&g_CardHandle, 0) != 0)
-	{
-		g_CardHandle = NULL;
-		qDebug() << "找不到ZHHK429板卡!\n";
-		return;
-	}
-	else
-	{
-		if (g_CardHandle == NULL)
-		{
-			qDebug() << "找不到ZHHK429板卡!\n";
-			return;
-		}
-	}
-	// 全局复位
-	if (ZHHK429_Reset(g_CardHandle) != 0)
-	{
-		qDebug() << "复位ZHHK429板卡失败!\n";
-		return;
-	}
-
-
-	// ****************************************************************
-	// 接收单元
-	// ****************************************************************
-
-	// 复位板卡接收通道
-	ZHHK429_RX_Reset(g_CardHandle, ch_rx);
-
-	// ================RX参数配置==============
-	RxCfg.Cfg_BaudCounter = 15; // 速率为100K. 计算公式：48M/(32*100K) = 15.
-	RxCfg.Cfg_ParityEnable = 0; // 无校验
-	RxCfg.Cfg_ParityMode = 0; // 校验模式选择
-	RxCfg.Cfg_BusOrderEnable = 0; // 数据模式选择
-	RxCfg.Cfg_SDDecoderEnable = 0; // SD解码不使能
-	RxCfg.Cfg_SDDecoderData = 0; // SD[1：0]
-	RxCfg.Cfg_SelfTestEnable = 1; // 自环测试
-	ZHHK429_RX_Configure(g_CardHandle, ch_rx, &RxCfg);
-
-	// 接收缓存触发深度(采用中断接收方式下使用)
-	// ZHHK429_RX_TriggerDepth (g_CardHandle, ch_rx, 0);
-
-	// 设置接收时标使能
-	ZHHK429_RX_TimeTagMode(g_CardHandle, ch_rx, 0);
-
-	// 设置Lable过滤表使能
-	// ZHHK429_RX_LableFilterEnable (g_CardHandle, ch_rx, 0);
-
-	// 清空接收缓冲区
-	ZHHK429_RX_BufferClr(g_CardHandle, ch_rx);
-
-	// 接收使能
-	ZHHK429_RX_RecvEnable(g_CardHandle, ch_rx, 1);
-
-
-	// ****************************************************************
-	// 发送单元
-	// ****************************************************************
-
-	// 复位板卡发送通道
-	ZHHK429_TX_Reset(g_CardHandle, ch_tx);
-
-	// ================TX参数配置==============
-	TxCfg.Cfg_BaudCounter = 15; // 速率为100K. 计算公式：48M/(32*100K) = 15.
-	TxCfg.Cfg_ParityEnable = 0; // 无校验
-	TxCfg.Cfg_ParityMode = 0; // 校验模式选择
-	TxCfg.Cfg_BusOrderEnable = 0; // 数据模式选择
-	ZHHK429_TX_Configure(g_CardHandle, ch_tx, &TxCfg);
-
-	// 发送缓存触发深度(暂未使用)
-	// ZHHK429_TX_TriggerDepth (g_CardHandle, ch_tx, TxTriggerDepth);
-
-	// 字间隔时间设置(单位50us)
-	ZHHK429_TX_TimerIntervalWord(g_CardHandle, ch_tx, 0x00000000);
-
-	// 帧间隔时间设置 (单位50us。设置为0时，表示非帧重发模式)
-	ZHHK429_TX_TimerIntervalFrame(g_CardHandle, ch_tx, 0x00004E20);
-
-	// ================TX数据准备==============
-	// 获取发送数据长度
-	memset(dwTxBuf, 0, sizeof(DWORD)*FIFO_TMAX);
-
-	if (tx_DataLength == 0)
-	{
-		printf("发送数据量不能为0!");
-		return;
-	}
-	if (tx_DataLength >= FIFO_TMAX)
-	{
-		printf("发送数据量太大!");
-		return;
-	}
-
-	// 发送缓存填充有序数据数据
-	i = 0;
-	while (i < tx_DataLength)
-	{
-		dwTxBuf[i] = 0x11110000 + i;
-		i++;
-	}
-
-	// ================TX数据发送==============
-	// 读取TX FIFO状态，检测是否空
-	ZHHK429_TX_BufferStatus(g_CardHandle, ch_tx, 0, &TxFIFOStatus);
-	if ((TxFIFOStatus & FIFOEmpty) == FIFOEmpty) // FIFO状态为空
-	{
-		// 将数据写入Tx FIFO
-		ZHHK429_TX_BufferData(g_CardHandle, ch_tx, 0, tx_DataLength, dwTxBuf);
-		// 启动发送
-		ZHHK429_TX_Start(g_CardHandle, ch_tx);
-	}
-	else
-	{ // Tx FIFO is not empty
-		printf("硬件缓冲区还有未发送完的数据!");
-	}
-
-
-	// ****************************************************************
-	// 创建消息接收线程
-	// ****************************************************************
-	if (g_CardHandle != NULL)
-	{
-		g_isRun = TRUE;
-		g_ThreadHandle = CreateThread(NULL,                // no security attributes
-			0,                   // use default stack size
-			WorkerFun,           // thread function
-			NULL,                // argument to thread function
-			CREATE_SUSPENDED,    // use default creation flags
-			&g_ThreadId);        // returns the thread identifier
-		if (g_ThreadHandle == NULL)
-		{
-			printf("无法创建接收线程,请重新启动应用程序!\n");
-			g_isRun = FALSE;
-		}
-		SetThreadPriority(g_ThreadHandle, THREAD_PRIORITY_NORMAL);
-		SetThreadPriority(g_ThreadHandle, THREAD_PRIORITY_BELOW_NORMAL);
-		ResumeThread(g_ThreadHandle);
-	}
-
-	while (g_isRun)
-	{
-		printf("|||||||||||||||||||||||||||||||||||||||||\n");
-		Sleep(1000);
-	}
-	printf("*********************************************\n");
-	Sleep(10000);
-	return;
-}

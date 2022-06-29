@@ -291,8 +291,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>131</width>
-       <height>191</height>
+       <width>98</width>
+       <height>28</height>
       </rect>
      </property>
      <attribute name="label">
@@ -305,7 +305,7 @@
        <x>0</x>
        <y>0</y>
        <width>131</width>
-       <height>191</height>
+       <height>200</height>
       </rect>
      </property>
      <attribute name="label">
@@ -394,8 +394,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>131</width>
-       <height>191</height>
+       <width>98</width>
+       <height>28</height>
       </rect>
      </property>
      <attribute name="label">
@@ -799,7 +799,7 @@
      <rect>
       <x>30</x>
       <y>600</y>
-      <width>151</width>
+      <width>211</width>
       <height>16</height>
      </rect>
     </property>
@@ -1066,6 +1066,19 @@
      <string>当前引导模式:</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="checkBox_is429Send">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>620</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>是否使用429发送数据</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>horizontalLayoutWidget</zorder>
@@ -1092,6 +1105,7 @@
    <zorder>label_zhuoJian_XV</zorder>
    <zorder>textBrowser_zhuoJianMode</zorder>
    <zorder>label_zhuoJianMode</zorder>
+   <zorder>checkBox_is429Send</zorder>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -1108,7 +1122,7 @@
      <x>0</x>
      <y>0</y>
      <width>1322</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuZHHK429">
@@ -1203,8 +1217,8 @@
    <slot>On_doubleSpinBox_Command_VKH_K_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>794</x>
-     <y>761</y>
+     <x>764</x>
+     <y>773</y>
     </hint>
     <hint type="destinationlabel">
      <x>757</x>
@@ -1219,8 +1233,8 @@
    <slot>On_doubleSpinBox_Command_VKH_H_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>955</x>
-     <y>761</y>
+     <x>925</x>
+     <y>773</y>
     </hint>
     <hint type="destinationlabel">
      <x>851</x>
@@ -1235,8 +1249,8 @@
    <slot>On_doubleSpinBox_Command_XYZV_X_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>645</x>
-     <y>813</y>
+     <x>625</x>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>712</x>
@@ -1251,8 +1265,8 @@
    <slot>On_doubleSpinBox_Command_XYZV_Y_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>735</x>
-     <y>813</y>
+     <x>716</x>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -1267,8 +1281,8 @@
    <slot>On_doubleSpinBox_Command_XYZV_Z_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>825</x>
-     <y>813</y>
+     <x>807</x>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>969</x>
@@ -1283,8 +1297,8 @@
    <slot>On_doubleSpinBox_Command_XYZV_V_ValueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>906</x>
-     <y>813</y>
+     <x>886</x>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1299,8 +1313,8 @@
    <slot>On_checkBox_checkBox_true_H_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>93</y>
+     <x>731</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1315,8 +1329,8 @@
    <slot>On_checkBox_checkBox_expect_H_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>117</y>
+     <x>731</x>
+     <y>90</y>
     </hint>
     <hint type="destinationlabel">
      <x>397</x>
@@ -1347,8 +1361,8 @@
    <slot>doubleSpinBox_Command_xiaHua_V(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>566</x>
-     <y>709</y>
+     <x>520</x>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>839</x>
@@ -1363,8 +1377,8 @@
    <slot>doubleSpinBox_Command_xiaHua_angle(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>657</x>
-     <y>709</y>
+     <x>624</x>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>940</x>
@@ -1379,8 +1393,8 @@
    <slot>doubleSpinBox_Command_xiaHua_H(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>759</x>
-     <y>709</y>
+     <x>734</x>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>1015</x>
@@ -1396,7 +1410,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>151</x>
-     <y>639</y>
+     <y>652</y>
     </hint>
     <hint type="destinationlabel">
      <x>252</x>
@@ -1411,8 +1425,8 @@
    <slot>On_doubleSpinBox_Command_zhuoJianZV_Limit_valueChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1275</x>
-     <y>793</y>
+     <x>1067</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>1269</x>
@@ -1427,8 +1441,8 @@
    <slot>On_checkBox_checkBox_Vx_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>210</y>
+     <x>1066</x>
+     <y>363</y>
     </hint>
     <hint type="destinationlabel">
      <x>754</x>
@@ -1443,8 +1457,8 @@
    <slot>On_checkBox_selectAlpha_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1289</x>
-     <y>186</y>
+     <x>1073</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>1110</x>
@@ -1459,8 +1473,8 @@
    <slot>On_checkBox_selectPsi_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1289</x>
-     <y>302</y>
+     <x>1073</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>1102</x>
@@ -1475,8 +1489,8 @@
    <slot>On_checkBox_checkBox_Vy_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>234</y>
+     <x>1066</x>
+     <y>363</y>
     </hint>
     <hint type="destinationlabel">
      <x>1017</x>
@@ -1491,8 +1505,8 @@
    <slot>On_checkBox_checkBox_Vz_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>258</y>
+     <x>1066</x>
+     <y>363</y>
     </hint>
     <hint type="destinationlabel">
      <x>1040</x>
@@ -1507,8 +1521,8 @@
    <slot>On_checkBox_selectBeta_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1289</x>
-     <y>215</y>
+     <x>1073</x>
+     <y>455</y>
     </hint>
     <hint type="destinationlabel">
      <x>1110</x>
@@ -1523,8 +1537,8 @@
    <slot>On_checkBox_selectTheta_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1289</x>
-     <y>244</y>
+     <x>1073</x>
+     <y>485</y>
     </hint>
     <hint type="destinationlabel">
      <x>1110</x>
@@ -1539,12 +1553,28 @@
    <slot>On_checkBox_selectPhi_stateChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1289</x>
-     <y>273</y>
+     <x>1073</x>
+     <y>515</y>
     </hint>
     <hint type="destinationlabel">
      <x>1110</x>
      <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_is429Send</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>On_checkBox_is429Send_StateChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>665</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>770</y>
     </hint>
    </hints>
   </connection>
@@ -1559,5 +1589,6 @@
   <slot>On_doubleSpinBox_Command_zhuoJianXV_valueChanged(double)</slot>
   <slot>On_doubleSpinBox_Command_zhuoJianYV_Limit_valueChanged(double)</slot>
   <slot>On_doubleSpinBox_Command_zhuoJianZV_Limit_valueChanged(double)</slot>
+  <slot>On_checkBox_is429Send_StateChange(int)</slot>
  </slots>
 </ui>

@@ -235,14 +235,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DDSLib\Dlls\SysWOW64\vcruntime140d.dll" />
-    <None Include="ZHHK429.dll" />
     <None Include="A429_API_DLL.dll" />
     <None Include="PCI_A429.dll" />
+    <None Include="USB_A429.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ZHHK429.lib" />
     <Library Include="A429_API_DLL.lib" />
     <Library Include="PCI_A429.lib" />
+    <Library Include="USB_A429.lib" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="Dialog_initsetting.ui">
