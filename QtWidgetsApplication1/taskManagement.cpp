@@ -21,6 +21,17 @@ taskManagement::taskManagement(CCloseLoopModel* clm_control)
 	Z_c = clm_control_task->m_fst.m_dZ;
 
 	PID_Chi = new Pid_control;
+	PID_Chi->outPutLimit = 45;
+	PID_Chi->Kp0 = 0.1;
+	PID_Chi->Kd0 = 0.03;
+	PID_Chi->Ki0 = 0.05;
+
+	PID_H= new Pid_control;
+	PID_H->Kp0 = 1;
+	PID_H->Ki0 = 0.0;
+	PID_H->Kd0 = 0.0;
+	PID_H->interLimit = 50;
+	PID_H->outPutLimit = 10;
 	//trackGenerator = new trackGeneration(data_time);
 
 }
@@ -116,10 +127,11 @@ void taskManagement::Update()
 	double step_second = data_time / 1000;
 	static bool pianChaZhuojian = false;
 	static int targetCnt = 0;
-	static double baseChi=45;
+	
 	static double zhuojianXYZV[4];
 	static double hc = 0;
 	double tmp;
+	
 	switch (currentMode)
 	{
 	case Mode_default:											//应飞指令，输入速度、航向、高度Command_VKH[0], Command_VKH[1], Command_VKH[2]
@@ -351,7 +363,7 @@ void taskManagement::Update()
 				if (targetCnt >= targetNode_X_Y_Z.size())
 				{
 					pianChaZhuojian = true;
-					baseChi = (clm_control_task->m_fst.m_dChi)/PI*180;
+					baseChi_deg = (clm_control_task->m_fst.m_dChi)/PI*180;
 					zhuojianXYZV[0] = clm_control_task->m_fst.m_dX + follow_V * 2 * cos(clm_control_task->m_fst.m_dChi);
 					zhuojianXYZV[1] = clm_control_task->m_fst.m_dX + follow_V * 2 * sin(clm_control_task->m_fst.m_dChi);
 					zhuojianXYZV[2] = clm_control_task->m_fst.m_dZ;
@@ -362,6 +374,8 @@ void taskManagement::Update()
 		}
 		else
 		{
+			static double lastErrorZ;
+			static bool firstRun = true;
 			if (YZError[0] > VY_MAXLimt)
 			{
 				YZError[0] = VY_MAXLimt;
@@ -371,23 +385,28 @@ void taskManagement::Update()
 				YZError[0] = (-VY_MAXLimt);
 			}
 
-			if (YZError[1] > VZ_MAXLimt)
-			{
-				YZError[1] = VZ_MAXLimt;
-			}
-			else if (YZError[1] < (-VZ_MAXLimt))
-			{
-				YZError[1] = (-VZ_MAXLimt);
-			}
+			//if (YZError[1] > VZ_MAXLimt)
+			//{
+			//	YZError[1] = VZ_MAXLimt;
+			//}
+			//else if (YZError[1] < (-VZ_MAXLimt))
+			//{
+			//	YZError[1] = (-VZ_MAXLimt);
+			//}
 			//qDebug() << "YZError[0]" << YZError[0];
 			//tmp= PID_Chi->PID_realize(YZError[0]);
 			//qDebug() << "tmp" << tmp;
 			//tmp += baseChi;
 			//qDebug() << "tmp2" << tmp;
-			hc += (YZError[1]*step_second);
-			clm_control_task->Input_VKH(follow_V, (PID_Chi->PID_realize(YZError[0])+ baseChi) /180*PI, hc);
+			// 20220704 纵向PID方案
+			//hc += (YZError[1]*step_second);
+			hc += (PID_H->PID_realize(YZError[1]) * step_second);
+			//double tmpChi = PID_Chi->PID_realize(YZError[0]) + baseChi_deg;
+			//qDebug() << tmpChi;
+			clm_control_task->Input_VKH(follow_V, (PID_Chi->PID_realize(YZError[0]) + baseChi_deg) /180*PI, hc);
 			//clm_control_task->Input_XYZ_V(follow_V, tmp / 180 * PI, 300,1);
 			clm_control_task->Update();
+			
 
 		}
 		break;

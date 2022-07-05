@@ -49,7 +49,7 @@ public:
 	int Update();
 	int Update_Manual();
 	int Update(double x, double y, double z, double m_ship_dH, double m_ship_p, double m_ship_q/*,double m_shiptail_Vx,double m_shiptail_Vy,double m_shiptail_Vz*/);
-
+	void Input_VKG(double vc, double khc, double gc);
 	void Level();
 	CCloseLoopModel();
 	virtual ~CCloseLoopModel();

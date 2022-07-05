@@ -125,6 +125,13 @@ void CCloseLoopModel::Level()
 	//m_bfollow = false;
 }
 
+void CCloseLoopModel::Input_VKG(double vc, double khc, double gc)
+{
+	m_ctler.m_iInputMod = CTL_HERBST_INPUT_VKG;
+	m_ctl[0] = vc,
+	m_ctl[1] = khc,
+	m_ctl[2] = gc;
+}
 
 //int CCloseLoopModel::Update(double x,double y,double z,double m_ship_dH,double m_ship_roll,double m_ship_pitch,double m_shiptail_Vx,double m_shiptail_Vy,double m_shiptail_Vz);
 //{

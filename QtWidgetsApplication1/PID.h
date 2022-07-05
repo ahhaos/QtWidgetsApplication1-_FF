@@ -15,6 +15,7 @@ public:
 	float err_next;
 	float err_last;
 	float outPutLimit;
+	float interLimit;
 	float Kp0, Ki0, Kd0;
 	float Kp1, Ki1, Kd1;
 	float Kp2, Ki2, Kd2;

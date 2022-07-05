@@ -41,7 +41,8 @@ void cav429::init()
 	printf("Checking IPCore and API versions . . . ");
 	status = CAV_L1_GetVersionInfo(DEVID, &IPCoreVersion, &l0Version, &l1Version);
 	//获取固件、Layer 0 API 和 Layer 1 API 的版本信息。
-	//CAV_L0_UINT32 CAV_L1_GetVersionInfo(CAV_L0_UINT32 devID,CAV_L0_UINT16 *peVersion,CAV_L0_UINT32 *layer0ApiVersion,CAV_L0_UINT32 *layer1ApiVersion)	//devID：设备标识符（具体定义见 2.1）。peVersion：固件信息。peVersion：固件信息。layer1ApiVersion：L1 层 API 版本信息。
+	//CAV_L0_UINT32 CAV_L1_GetVersionInfo(CAV_L0_UINT32 devID,CAV_L0_UINT16 *peVersion,CAV_L0_UINT32 *layer0ApiVersion,CAV_L0_UINT32 *layer1ApiVersion)
+	//devID：设备标识符（具体定义见 2.1）。peVersion：固件信息。peVersion：固件信息。layer1ApiVersion：L1 层 API 版本信息。
 	if (status == CAV_SUCCESS) {
 		printf("Success.\n");
 		printf("   Hardware version = %d.%d\n", (IPCoreVersion & 0x000000F0) >> 4, (IPCoreVersion & 0x0000000F));
@@ -92,8 +93,11 @@ void cav429::init()
 	//	CAV_L0_UINT32 TxChanNum,	//TxChanNum：发送通道号（0 - 33）。
 	//	CAV_L0_UINT32 BitRateHz,	//BitRateHz：发送的波特率 500bp/s– 300000bp/s。
 	//	CAV_L0_UINT32 numTXCB,		//numTXCB：该发送通道分配的发送控制块个数。
-	//	CAV_L1_TX_BitDirection *BitDir	//BitDir：指向存放接收数据位序的指针（具体定义见 3.7.6）。	//									//注：结构体中两个变量都设为 0 时，和之前的板卡功能相同。	//									详细信息请参考：附 1 ARINC A429 总线信号顺序说明发送消息位序说明。
-	//	)	//
+	//	CAV_L1_TX_BitDirection *BitDir	//BitDir：指向存放接收数据位序的指针（具体定义见 3.7.6）。
+	//									//注：结构体中两个变量都设为 0 时，和之前的板卡功能相同。
+	//									详细信息请参考：附 1 ARINC A429 总线信号顺序说明发送消息位序说明。
+	//	)
+	//
 	if (status != CAV_SUCCESS) {
 		printf("ERROR %d on CAV_L1_A429_TX_Channel_Init\n", status);
 		return;

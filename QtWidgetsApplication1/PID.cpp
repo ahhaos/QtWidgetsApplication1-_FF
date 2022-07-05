@@ -8,7 +8,8 @@ Pid_control::Pid_control()
 	err = 0.0;
 	err_last = 0.0;
 	err_next = 0.0;
-	outPutLimit = 25;
+	outPutLimit = 45;
+	interLimit = 20;
 	Kp0 = 0.1;
 	Kd0 = 0.03;
 	Ki0 = 0.05;
@@ -37,10 +38,10 @@ double Pid_control::PID_realize(double inPut)
 	//cout << "err" << err << endl;
 	//cout << "incrementSpeed" << incrementSpeed << endl;
 	inter += err;
-	if (inter <= -20)
-		inter = -20;
-	if (inter >= 20)
-		inter = 20;
+	if (inter <= -interLimit)
+		inter = -interLimit;
+	if (inter >= interLimit)
+		inter = interLimit;
 	err_last = err_next;
 	err_next = err;
 	if (incrementSpeed > outPutLimit)

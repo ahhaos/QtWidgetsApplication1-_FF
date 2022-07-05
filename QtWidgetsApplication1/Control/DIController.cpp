@@ -480,7 +480,7 @@ int CDIController::Update_XYZV()
 							//dBuffer[10] = w;
 	dBuffer[0] = m_dInputs[0];
 	dBuffer[1] = m_dInputs[1];
-	dBuffer[2] = m_dInputs[2]; //舰体升沉
+	dBuffer[2] = m_dInputs[2]; 
 	m_lpfst = m_pfst;			//赋值给上一回//记录上一个仿真周期的状态
 
 								//if(m_iInputMod>=CTL_HERBST_INPUT_ABM_V)

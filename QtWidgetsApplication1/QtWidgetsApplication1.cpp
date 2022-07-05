@@ -1080,6 +1080,10 @@ void QtWidgetsApplication1::udpReceiveZhuoJianError()
 		double Y0Error;	//雷达
 		double Z1Error;
 		double Y1Error;	//光电
+		double landingChi_deg;
+		double shipLat;
+		double shipLon;
+		double shipAlt;
 	};
 	//qDebug() << sizeof(zhuoJianUDPDateStruct);
 	zhuoJianUDPDateStruct receiveDate;
@@ -1143,15 +1147,29 @@ void QtWidgetsApplication1::udpReceiveZhuoJianError()
 		}
 		ui.textBrowser_zhuoJianMode->setText(modeStr);
 	}
-	if (cnt > 40)
+	if (cnt >= 40)
 	{
-		qDebug() << "receiveDate.Y0Error:" << receiveDate.Y0Error << "receiveDate.Z0Error:" << receiveDate.Z0Error;
-		qDebug() << "receiveDate.Y1Error:" << receiveDate.Y1Error << "receiveDate.Z1Error:" << receiveDate.Z1Error;
+		//qDebug() << "receiveDate.Y0Error:" << receiveDate.Y0Error << "receiveDate.Z0Error:" << receiveDate.Z0Error;
+		//qDebug() << "receiveDate.Y1Error:" << receiveDate.Y1Error << "receiveDate.Z1Error:" << receiveDate.Z1Error;
 		qDebug() << "YError:" << taskManager->YZError[0] << "ZError:" << taskManager->YZError[1];
 		cnt = 0;
 	}
 	cnt++;
-	
+	double tmpChi = receiveDate.landingChi_deg+180;
+	//qDebug() << tmpChi;
+	while (tmpChi > 180)
+	{
+		tmpChi -= 360;
+	} 
+	while (tmpChi < (-180))
+	{
+		tmpChi += 360;
+	}
+
+	taskManager->baseChi_deg = tmpChi;
+	shipPointBLH[0] = receiveDate.shipLat;
+	shipPointBLH[1] = receiveDate.shipLon;
+	shipPointBLH[2] = receiveDate.shipAlt;
 }
 
 void QtWidgetsApplication1::udpSendDAta()
@@ -1200,7 +1218,7 @@ void QtWidgetsApplication1::udpSendDAta()
 		float airflowVelocity = 0;      // 气流速度
 	};//飞仿数据
 	UdpData *sendData = new UdpData;
-
+	//qDebug() << sendData->latitude << ";" << sendData->longitude << ";" << sendData->radioAltitude << ";";
 	QByteArray str;
 	str.clear();
 	str.append((char*)sendData, sizeof(UdpData));
@@ -1209,8 +1227,12 @@ void QtWidgetsApplication1::udpSendDAta()
 	// 本地UDP测试
 	struct  testUDP
 	{
-		double Dz=taskManager->clm_control_task->m_fst.m_dZ;
-		double Dx = taskManager->clm_control_task->m_fst.m_dY;
+		double latitude = B;
+		double longitude = L;
+		double altitude = H;
+		double Dx = clm_control->m_fst.m_dX;
+		double Dy = clm_control->m_fst.m_dY;
+		double Dz = clm_control->m_fst.m_dZ;
 	};
 	testUDP *sendData1 = new testUDP;
 	QByteArray str1;

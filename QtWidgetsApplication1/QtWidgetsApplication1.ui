@@ -291,8 +291,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>98</width>
-       <height>28</height>
+       <width>100</width>
+       <height>30</height>
       </rect>
      </property>
      <attribute name="label">
@@ -305,7 +305,7 @@
        <x>0</x>
        <y>0</y>
        <width>131</width>
-       <height>200</height>
+       <height>191</height>
       </rect>
      </property>
      <attribute name="label">
@@ -394,8 +394,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>98</width>
-       <height>28</height>
+       <width>100</width>
+       <height>30</height>
       </rect>
      </property>
      <attribute name="label">
@@ -970,8 +970,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>850</x>
-      <y>610</y>
+      <x>790</x>
+      <y>620</y>
       <width>219</width>
       <height>57</height>
      </rect>
@@ -1040,32 +1040,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_zhuoJianMode">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>630</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_zhuoJianMode">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>600</y>
-      <width>131</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-    </property>
-    <property name="text">
-     <string>当前引导模式:</string>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="checkBox_is429Send">
     <property name="geometry">
      <rect>
@@ -1078,6 +1052,31 @@
     <property name="text">
      <string>是否使用429发送数据</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>620</y>
+      <width>151</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_zhuoJianMode">
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+       </property>
+       <property name="text">
+        <string>当前引导模式:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_zhuoJianMode"/>
+     </item>
+    </layout>
    </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
@@ -1122,7 +1121,7 @@
      <x>0</x>
      <y>0</y>
      <width>1322</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuZHHK429">

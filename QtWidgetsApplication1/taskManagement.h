@@ -40,6 +40,7 @@ public:
 	pathGeneration* pathGenerator_2;
 	int haveArrivedNodeNumber;
 	Pid_control* PID_Chi;
+	Pid_control* PID_H;
 	//---------------------------------------
 	WgsConversions* wgs_enuConversion;
 	//CRead_txt* txt_transmit;
@@ -71,6 +72,7 @@ public:
 	int m_landing_bool;
 	unsigned int currentMode;
 	double xiaHuaChi;										//下滑模式开始时的航向
+	double baseChi_deg = 0;
 	//int XVofset;
 	//int YVofset;
 protected:

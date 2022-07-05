@@ -181,6 +181,12 @@ void Dialog_initsetting::On_pushButton_saveTargeNode_clicked()
 	data_origin_L0 = targetNode_L_B_H[0][0];
 	data_origin_B0 = targetNode_L_B_H[0][1];
 	data_origin_H0 = targetNode_L_B_H[0][2];
+
+	// 初始经纬高改变
+	L = data_origin_L0;
+	B = data_origin_B0;//纬度
+	H = data_origin_H0;
+
 	// 初始化东北天ENU的坐标原点
 	lla_ref[0] = data_origin_B0;
 	lla_ref[1] = data_origin_L0;
