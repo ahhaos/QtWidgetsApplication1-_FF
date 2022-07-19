@@ -182,6 +182,9 @@ void Dialog_initsetting::On_pushButton_saveTargeNode_clicked()
 	data_origin_B0 = targetNode_L_B_H[0][1];
 	data_origin_H0 = targetNode_L_B_H[0][2];
 
+	data_origin_X = 0;
+	data_origin_Y = 0;
+	data_origin_Z = data_origin_H0;
 	// 初始经纬高改变
 	L = data_origin_L0;
 	B = data_origin_B0;//纬度

@@ -22,8 +22,8 @@ taskManagement::taskManagement(CCloseLoopModel* clm_control)
 
 	PID_Chi = new Pid_control;
 	PID_Chi->outPutLimit = 45;
-	PID_Chi->Kp0 = 0.1;
-	PID_Chi->Kd0 = 0.03;
+	PID_Chi->Kp0 = 0.2;
+	PID_Chi->Kd0 = 0.04;
 	PID_Chi->Ki0 = 0.05;
 
 	PID_H= new Pid_control;
@@ -359,6 +359,7 @@ void taskManagement::Update()
 			if (sqrt((clm_control_task->m_fst.m_dX - Command_XYZV[0])*(clm_control_task->m_fst.m_dX - Command_XYZV[0]) +
 				(clm_control_task->m_fst.m_dY - Command_XYZV[1])*(clm_control_task->m_fst.m_dY - Command_XYZV[1])) < arriveDistanceFlag * 10)												//以飞机距离目标点的距离小于一百作为判断是否达到目标点的标准
 			{
+				emit targetArrived(targetCnt);
 				targetCnt++;
 				if (targetCnt >= targetNode_X_Y_Z.size())
 				{

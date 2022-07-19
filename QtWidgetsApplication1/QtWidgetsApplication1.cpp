@@ -1314,7 +1314,7 @@ void QtWidgetsApplication1::drawLandingPlaning()
 	//lineSeries_landingPlaning->append(QPointF(101, 100));
 	qDebug()<<"X:" << minX << maxX;
 	mChart_Z->axisX()->setRange(minX, maxX);
-	mChart_Z->axisY()->setRange(minY, maxY);
+	mChart_Z->axisY()->setRange(minY, 400);
 	
 }
 
